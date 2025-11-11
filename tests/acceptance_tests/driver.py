@@ -27,7 +27,7 @@ class Driver:
         assert heading.text == "Create new register"
 
         name_field = self.browser.find_element(By.NAME, "name")
-        #TODO assert that field is empty?
+        # TODO assert that field is empty?
         name_field.send_keys(name)
 
         self.browser.find_element(By.NAME, "submit").click()

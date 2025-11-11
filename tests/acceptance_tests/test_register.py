@@ -28,4 +28,3 @@ class RegisterTests(TestCase):
     def test_can_create_new_register(self):
         self.dsl.create_new_register(name="TestRegister")
         self.dsl.confirm_register_exists(name="TestRegister")
-
