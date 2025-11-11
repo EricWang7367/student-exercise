@@ -15,6 +15,22 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-24.04
+    env:
+      CONTACT_EMAIL: test@example.com
+      CONTACT_PHONE: 0123456789
+      DEPARTMENT_NAME: 'HM Land Registry'
+      DEPARTMENT_URL: https://www.gov.uk/government/organisations/land-registry
+      POSTGRES_DB: db
+      POSTGRES_HOST: db
+      POSTGRES_PASSWORD: ${{ secrets.PG_PASS }}
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: ${{ secrets.PG_USER }}
+      REDIS_HOST: cache
+      REDIS_PORT: 6379
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      SERVICE_NAME: 'Student exercise'
+      SERVICE_PHASE: Beta
+      SERVICE_URL: http://localhost
     strategy:
       matrix:
         python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
@@ -48,3 +64,7 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=120 --statistics
       - name: Unit tests with pytest
         run: python -m pytest tests/unit_tests/ --cov=app --cov-report=term-missing --cov-branch
+      - name: Docker compose
+        run: docker-compose up -d
+      - name: Acceptance tests with pytest
+        run: python -m pytest tests/acceptance_tests/
