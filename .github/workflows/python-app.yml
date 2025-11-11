@@ -64,7 +64,9 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=120 --statistics
       - name: Unit tests with pytest
         run: python -m pytest tests/unit_tests/ --cov=app --cov-report=term-missing --cov-branch
-      - name: Docker compose
+      - name: Set up Docker Compose
+        uses: docker/setup-compose-action@v1
+      - name: Run Docker Compose
         run: docker-compose up -d
       - name: Acceptance tests with pytest
         run: python -m pytest tests/acceptance_tests/
