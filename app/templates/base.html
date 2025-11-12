@@ -113,17 +113,9 @@
     'serviceUrl': url_for('main.index'),
     'navigation': [
       {
-        'href': "#",
-        'text': "Navigation item 1"
-      },
-      {
-        'href': "#",
-        'text': "Navigation item 2",
-        'active': true
-      },
-      {
-        'href': "#",
-        'text': "Navigation item 3"
+        'href': url_for('register.index'),
+        'text': "Registers",
+        'active': true if url_for('register.index') in request.path else false
       }
     ]
   }) }}

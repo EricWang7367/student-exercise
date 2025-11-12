@@ -1,5 +1,7 @@
 {%- extends "base.html" -%}
 
+{%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton -%}
+
 {%- block beforeContent -%}
 {{ super() }}
 {%- endblock -%}
@@ -8,7 +10,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     {{ super() }}
-    <h1 class="govuk-heading-xl">Register</h1>
+    <h1 class="govuk-heading-xl">Registers</h1>
+    {{ govukButton({
+      'text': "Create new register",
+      'href': "#"
+    }) }}
   </div>
 </div>
 {%- endblock -%}
