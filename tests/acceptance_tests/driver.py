@@ -20,8 +20,14 @@ class Driver:
         self.browser.quit()
 
     def create_new_register(self, name):
-        link = self.browser.find_element(By.LINK_TEXT, "Create new register")
-        link.click()
+        register_link = self.browser.find_element(By.LINK_TEXT, "Registers")
+        register_link.click()
+
+        register_heading = self.browser.find_element(By.TAG_NAME, "h1")
+        assert register_heading.text == "Registers"
+
+        create_link = self.browser.find_element(By.LINK_TEXT, "Create new register")
+        create_link.click()
 
         heading = self.browser.find_element(By.TAG_NAME, "h1")
         assert heading.text == "Create new register"
