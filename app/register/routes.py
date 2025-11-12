@@ -1,5 +1,7 @@
 from flask import render_template
+
 from app.register import bp
+from app.register.forms import RegisterForm
 
 
 @bp.route("/", methods=["GET"])
@@ -9,4 +11,5 @@ def index() -> str:
 
 @bp.route("/new", methods=["GET", "POST"])
 def create() -> str:
-    return render_template("create_register.html")
+    form = RegisterForm()
+    return render_template("create_register.html", form=form)
