@@ -1,5 +1,5 @@
 from flask import Blueprint
 
-bp: Blueprint = Blueprint("register", __name__, template_folder="../templates/register")
+bp: Blueprint = Blueprint("register", __name__, template_folder="../templates/register", url_prefix="/registers")
 
 from app.register import routes  # noqa: E402,F401

@@ -1,12 +1,12 @@
-
-from flask import (
-    render_template
-)
-
+from flask import render_template
 from app.register import bp
 
 
-@bp.route("/registers", methods=["GET"])
+@bp.route("/", methods=["GET"])
 def index() -> str:
-    """Render the index page."""
-    return render_template("list_register.html")
+    return render_template("list_registers.html")
+
+
+@bp.route("/new", methods=["GET", "POST"])
+def create() -> str:
+    return render_template("create_register.html")
