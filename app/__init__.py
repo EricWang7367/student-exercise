@@ -59,8 +59,10 @@ def create_app(config_class: Type[Config] = Config) -> Flask:
 
     # Register blueprints. These define different sections of the application.
     from app.main import bp as main_bp
+    from app.register import bp as register_bp
 
     app.register_blueprint(main_bp)
+    app.register_blueprint(register_bp)
 
     return app
 
