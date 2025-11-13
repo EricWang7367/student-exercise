@@ -12,4 +12,8 @@ def index() -> str:
 @bp.route("/new", methods=["GET", "POST"])
 def create() -> str:
     form = RegisterForm()
+
+    if form.validate_on_submit():
+        pass
+
     return render_template("register/create.html", form=form)

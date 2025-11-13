@@ -41,10 +41,10 @@ class Driver:
     def confirm_name_required_validation_error(self):
         assert self.browser.title.startswith("Error: ")
 
-        error_heading = self.browser.find_element(By.XPATH, "//h2[text()='There is a problem']")
+        error_heading = self.browser.find_element(By.XPATH, "//h2[contains(text(),'There is a problem')]")
         assert error_heading is not None, "Error heading not found"
 
-        error_message = self.browser.find_element(By.XPATH, "//p[text()='Enter a register name']")
+        error_message = self.browser.find_element(By.XPATH, "//a[text()='Enter a name']")
         assert error_message is not None, "Error message not found"
 
     def confirm_name_already_exists_validation_error(self):
@@ -53,5 +53,5 @@ class Driver:
         error_heading = self.browser.find_element(By.XPATH, "//h2[text()='There is a problem']")
         assert error_heading is not None, "Error heading not found"
 
-        error_message = self.browser.find_element(By.XPATH, "//p[text()='Name already in use']")
+        error_message = self.browser.find_element(By.XPATH, "//a[text()='Name already in use']")
         assert error_message is not None, "Error message not found"
