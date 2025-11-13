@@ -100,8 +100,8 @@ def test_http_errors(app: FlaskClient) -> None:
     assert response.status_code == 404
     assert b"Page not found" in response.data
 
-    response = app.get("/")
-    response = app.get("/")
-    response = app.get("/")
+    for i in range(1, 52):
+        response = app.get("/")
+
     assert response.status_code == 429
     assert b"There have been too many attempts to access this page." in response.data
