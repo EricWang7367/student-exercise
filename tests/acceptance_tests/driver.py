@@ -55,3 +55,10 @@ class Driver:
 
         error_message = self.browser.find_element(By.XPATH, "//a[text()='Name already in use']")
         assert error_message is not None, "Error message not found"
+
+    def confirm_register_exists(self, name):
+        register_link = self.browser.find_element(By.LINK_TEXT, "Registers")
+        register_link.click()
+
+        existing_register = self.browser.find_element(By.XPATH, f"//*[contains(text(),'{name}')]")
+        assert existing_register is not None, "Register not found"
