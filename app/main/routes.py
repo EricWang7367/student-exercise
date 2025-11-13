@@ -19,13 +19,13 @@ from app.main.forms import CookiesForm
 @bp.route("/", methods=["GET"])
 def index() -> str:
     """Render the index page."""
-    return render_template("index.html")
+    return render_template("main/index.html")
 
 
 @bp.route("/accessibility", methods=["GET"])
 def accessibility() -> str:
     """Render the accessibility statement page."""
-    return render_template("accessibility.html")
+    return render_template("main/accessibility.html")
 
 
 @bp.route("/cookies", methods=["GET", "POST"])
@@ -43,7 +43,7 @@ def cookies() -> Union[str, Response]:
         # Create flash message confirmation before rendering template
         flash("You've set your cookie preferences.", "success")
         # Create the response so we can set cookies before returning
-        response: Response = make_response(render_template("cookies.html", form=form))
+        response: Response = make_response(render_template("main/cookies.html", form=form))
 
         # Set individual cookies in the response
         response.set_cookie("functional", functional, max_age=31557600, secure=True, samesite="Lax")
@@ -59,13 +59,13 @@ def cookies() -> Union[str, Response]:
         form.functional.data = functional
         form.analytics.data = analytics
 
-    return render_template("cookies.html", form=form)
+    return render_template("main/cookies.html", form=form)
 
 
 @bp.route("/privacy", methods=["GET"])
 def privacy() -> str:
     """Render the privacy policy page."""
-    return render_template("privacy.html")
+    return render_template("main/privacy.html")
 
 
 @bp.route("/health", methods=["GET"])
@@ -77,7 +77,7 @@ def health() -> Response:
 @bp.app_errorhandler(HTTPException)
 def handle_http_exception(error: HTTPException) -> Response:
     """Handle HTTP exceptions and render appropriate error template."""
-    return make_response(render_template(f"{error.code}.html"), error.code)
+    return make_response(render_template(f"main/{error.code}.html"), error.code)
 
 
 @bp.app_errorhandler(CSRFError)
