@@ -17,4 +17,3 @@ class RegisterForm(FlaskForm):
     def validate_name(self, field):
         if Register.query.filter_by(name=field.data).first():
             raise ValidationError("Name already in use")
-
