@@ -15,6 +15,9 @@
       'text': "Create new register",
       'href': url_for('register.create')
     }) }}
+    {% for register in registers %}
+      <p>{{ register.name }}</p>
+    {% endfor %}
   </div>
 </div>
 {%- endblock -%}
