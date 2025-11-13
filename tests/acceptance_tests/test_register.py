@@ -21,10 +21,10 @@ class RegisterTests(TestCase):
         self.dsl.confirm_name_required_validation_error()
 
     def test_register_name_must_be_unique(self):
-        self.dsl.create_new_register(name="TestRegister")
-        self.dsl.create_new_register(name="TestRegister")
+        self.dsl.create_new_register(name="Existing register")
+        self.dsl.create_new_register(name="Existing register")
         self.dsl.confirm_name_already_exists_validation_error()
 
     def test_can_create_new_register(self):
-        self.dsl.create_new_register(name="TestRegister")
-        self.dsl.confirm_register_exists(name="TestRegister")
+        self.dsl.create_new_register(name="A new register")
+        self.dsl.confirm_register_created(name="A new register")

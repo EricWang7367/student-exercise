@@ -23,7 +23,7 @@ def create() -> Union[str, Response]:
         new_register = Register(name=form.name.data)
         db.session.add(new_register)
         db.session.commit()
-        flash("TEMP HELLO WORLD")
+        flash("Successfully created register", "success")
         return redirect(url_for("register.index"))
 
     return render_template("register/create.html", form=form)
