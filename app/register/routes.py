@@ -1,9 +1,12 @@
-from flask import render_template, redirect, url_for, flash
+from typing import Union
+
+from flask import flash, redirect, render_template, url_for
+from werkzeug import Response
+
+from app import db
+from app.models import Register
 from app.register import bp
 from app.register.forms import RegisterForm
-
-from app.models import Register
-from app import db
 
 
 @bp.route("/", methods=["GET"])
@@ -13,7 +16,7 @@ def index() -> str:
 
 
 @bp.route("/new", methods=["GET", "POST"])
-def create() -> str:
+def create() -> Union[str, Response]:
     form = RegisterForm()
 
     if form.validate_on_submit():
