@@ -6,11 +6,11 @@ class Dsl:
     def __init__(self, driver: Driver):
         self.driver = driver
 
-    def open_system(self):
-        self.driver.open_system()
+    def setup(self):
+        self.driver.setup()
 
-    def close_system(self):
-        self.driver.close_system()
+    def tear_down(self):
+        self.driver.tear_down()
 
     def create_new_register(self, name="Register of Things"):
         self.driver.create_new_register(name)

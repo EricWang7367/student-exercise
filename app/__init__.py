@@ -15,7 +15,7 @@ from config import Config
 # Initialize Flask extensions. These are initialized here for easier access.
 csrf: CSRFProtect = CSRFProtect()
 db: SQLAlchemy = SQLAlchemy()
-limiter: Limiter = Limiter(get_remote_address, default_limits=["2 per second", "60 per minute"])
+limiter: Limiter = Limiter(get_remote_address, default_limits=["50 per second", "500 per minute"])
 migrate: Migrate = Migrate()
 
 

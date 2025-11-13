@@ -1,6 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 class Driver:
@@ -12,22 +14,23 @@ class Driver:
         self.browser = webdriver.Chrome(options=options)
         self.base_url = base_url
 
-    def open_system(self):
+    def setup(self):
         self.browser.get(self.base_url)
         assert self.browser.title.endswith("GOV.UK")
 
-    def close_system(self):
+    def tear_down(self):
         self.browser.quit()
 
     def create_new_register(self, name):
-        register_link = self.browser.find_element(By.LINK_TEXT, "Registers")
-        register_link.click()
+        registers_link = self.browser.find_element(By.LINK_TEXT, "Registers")
+
+        self._follow_link(registers_link)
 
         register_heading = self.browser.find_element(By.TAG_NAME, "h1")
         assert register_heading.text == "Registers"
 
         create_link = self.browser.find_element(By.LINK_TEXT, "Create new register")
-        create_link.click()
+        self._follow_link(create_link)
 
         heading = self.browser.find_element(By.TAG_NAME, "h1")
         assert heading.text == "Create new register"
@@ -59,8 +62,12 @@ class Driver:
         success_message = self.browser.find_element(By.XPATH, "//*[contains(text(),'Successfully created register')]")
         assert success_message is not None, "Success message not found"
 
-        register_link = self.browser.find_element(By.LINK_TEXT, "Registers")
-        register_link.click()
+        registers_link = self.browser.find_element(By.LINK_TEXT, "Registers")
+        self._follow_link(registers_link)
 
         existing_register = self.browser.find_element(By.XPATH, f"//*[contains(text(),'{name}')]")
         assert existing_register is not None, "Register not found"
+
+    def _follow_link(self, link):
+        link.click()
+        WebDriverWait(self.browser, 5).until(EC.staleness_of(link))
