@@ -1,7 +1,7 @@
 from typing import Union
 from uuid import UUID
 
-from flask import flash, redirect, render_template, url_for
+from flask import flash, redirect, render_template, request, url_for
 from werkzeug import Response
 
 from app import db
@@ -21,8 +21,8 @@ def create() -> Union[str, Response]:
     form = RegisterForm()
 
     if form.validate_on_submit():
-        new_register = Register(name=form.name.data)
-        db.session.add(new_register)
+        register = Register(name=form.name.data)
+        db.session.add(register)
         db.session.commit()
         flash("Successfully created register", "success")
         return redirect(url_for("register.index"))
@@ -34,3 +34,19 @@ def create() -> Union[str, Response]:
 def view(id: UUID) -> str:
     register = db.get_or_404(Register, id)
     return render_template("register/view.html", register=register)
+
+
+@bp.route("/<uuid:id>/edit", methods=["GET", "POST"])
+def edit(id: UUID) -> Union[str, Response]:
+    register: Register = db.get_or_404(Register, id)
+    form = RegisterForm()
+
+    if request.method == "GET":
+        form.name.data = register.name
+    elif form.validate_on_submit():
+        register.name = form.name.data
+        db.session.commit()
+        flash("Successfully edited register", "success")
+        return redirect(url_for("register.index"))
+
+    return render_template("register/edit.html", register=register, form=form)
