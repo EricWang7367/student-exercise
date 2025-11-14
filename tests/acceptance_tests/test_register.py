@@ -28,3 +28,7 @@ class RegisterTests(TestCase):
     def test_can_create_new_register(self):
         self.dsl.create_new_register()
         self.dsl.confirm_register_created()
+
+    def test_can_view_register(self):
+        self.dsl.create_new_register()
+        self.dsl.confirm_can_view_register()

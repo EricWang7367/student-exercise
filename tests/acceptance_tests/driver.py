@@ -1,8 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
 
 
 class Driver:
@@ -22,15 +20,10 @@ class Driver:
         self.browser.quit()
 
     def create_new_register(self, name):
-        registers_link = self.browser.find_element(By.LINK_TEXT, "Registers")
-
-        self._follow_link(registers_link)
-
-        register_heading = self.browser.find_element(By.TAG_NAME, "h1")
-        assert register_heading.text == "Registers"
+        self._navigate_to_registers()
 
         create_link = self.browser.find_element(By.LINK_TEXT, "Create new register")
-        self._follow_link(create_link)
+        create_link.click()
 
         heading = self.browser.find_element(By.TAG_NAME, "h1")
         assert heading.text == "Create new register"
@@ -41,33 +34,45 @@ class Driver:
         self.browser.find_element(By.NAME, "submit").click()
 
     def confirm_name_required_validation_error(self):
-        self._confirm_errors_displayed()
+        self._confirm_page_has_errors()
 
         error_message = self.browser.find_element(By.XPATH, "//a[text()='Enter a name']")
         assert error_message is not None, "Error message not found"
 
     def confirm_name_already_exists_validation_error(self):
-        self._confirm_errors_displayed()
+        self._confirm_page_has_errors()
 
         error_message = self.browser.find_element(By.XPATH, "//a[text()='Name already in use']")
         assert error_message is not None, "Error message not found"
-
-    def _confirm_errors_displayed(self):
-        assert self.browser.title.startswith("Error: ")
-
-        error_heading = self.browser.find_element(By.XPATH, "//h2[contains(text(),'There is a problem')]")
-        assert error_heading is not None, "Error heading not found"
 
     def confirm_register_created(self, name):
         success_message = self.browser.find_element(By.XPATH, "//*[contains(text(),'Successfully created register')]")
         assert success_message is not None, "Success message not found"
 
-        registers_link = self.browser.find_element(By.LINK_TEXT, "Registers")
-        self._follow_link(registers_link)
+        self._navigate_to_registers()
 
         existing_register = self.browser.find_element(By.XPATH, f"//*[contains(text(),'{name}')]")
         assert existing_register is not None, "Register not found"
 
-    def _follow_link(self, link):
-        link.click()
-        WebDriverWait(self.browser, 5).until(EC.staleness_of(link))
+    def confirm_can_view_register(self, name):
+        self._navigate_to_registers()
+
+        register_link = self.browser.find_element(By.LINK_TEXT, name)
+        register_link.click()
+
+        page_heading = self.browser.find_element(By.TAG_NAME, "h1")
+        assert page_heading.text == name
+
+    def _navigate_to_registers(self):
+        registers_link = self.browser.find_element(By.LINK_TEXT, "Registers")
+        registers_link.click()
+
+        register_heading = self.browser.find_element(By.TAG_NAME, "h1")
+        assert register_heading.text == "Registers"
+
+
+    def _confirm_page_has_errors(self):
+        assert self.browser.title.startswith("Error: ")
+
+        error_heading = self.browser.find_element(By.XPATH, "//h2[contains(text(),'There is a problem')]")
+        assert error_heading is not None, "Error heading not found"
