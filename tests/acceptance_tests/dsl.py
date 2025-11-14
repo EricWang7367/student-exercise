@@ -6,6 +6,8 @@ from tests.acceptance_tests.driver import Driver
 
 class Dsl:
 
+    DEFAULT_REGISTER_NAME = "Register of Things"
+
     def __init__(self, driver: Driver):
         self.driver = driver
         self.aliases: Dict[str, str] = {}
@@ -16,10 +18,10 @@ class Dsl:
     def tear_down(self):
         self.driver.tear_down()
 
-    def create_new_register(self, name="Register of Things"):
+    def create_new_register(self, name=DEFAULT_REGISTER_NAME):
         self.driver.create_new_register(self._encode_alias(name))
 
-    def confirm_register_created(self, name="Register of Things"):
+    def confirm_register_created(self, name=DEFAULT_REGISTER_NAME):
         self.driver.confirm_register_created(self._decode_alias(name))
 
     def confirm_name_required_validation_error(self):
@@ -27,6 +29,10 @@ class Dsl:
 
     def confirm_name_already_exists_validation_error(self):
         self.driver.confirm_name_already_exists_validation_error()
+
+    def confirm_can_view_register(self, name=DEFAULT_REGISTER_NAME):
+        self.driver.confirm_can_view_register(self._encode_alias(name))
+        pass
 
     def _encode_alias(self, name):
         if name == "":
