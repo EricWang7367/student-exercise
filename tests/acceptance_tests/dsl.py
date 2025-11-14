@@ -18,6 +18,10 @@ class Dsl:
     def tear_down(self):
         self.driver.tear_down()
 
+    def ensure_existing_register(self, name=DEFAULT_REGISTER_NAME):
+        self.create_new_register(name)
+        self.confirm_register_created(name)
+
     def create_new_register(self, name=DEFAULT_REGISTER_NAME):
         self.driver.create_new_register(self._encode_alias(name))
 
@@ -32,7 +36,12 @@ class Dsl:
 
     def confirm_can_view_register(self, name=DEFAULT_REGISTER_NAME):
         self.driver.confirm_can_view_register(self._encode_alias(name))
-        pass
+
+    def update_existing_register(self, name=DEFAULT_REGISTER_NAME):
+        self.driver.update_existing_register(self._encode_alias(name), self._encode_alias("Updated" + name))
+
+    def confirm_register_updated(self, name=DEFAULT_REGISTER_NAME):
+        self.driver.confirm_register_updated(self._decode_alias("Updated " + name))
 
     def _encode_alias(self, name):
         if name == "":

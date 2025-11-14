@@ -1,6 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class Driver:
@@ -56,12 +58,21 @@ class Driver:
 
     def confirm_can_view_register(self, name):
         self._navigate_to_registers()
+        self._view_register(name)
 
-        register_link = self.browser.find_element(By.LINK_TEXT, name)
-        register_link.click()
+    def update_existing_register(self, name, new_name):
+        self._navigate_to_registers()
+        self._view_register(name)
 
-        page_heading = self.browser.find_element(By.TAG_NAME, "h1")
-        assert page_heading.text == name
+        edit_link = self.browser.find_element(By.LINK_TEXT, "Edit register")
+        edit_link.click()
+
+        name_field = self.browser.find_element(By.NAME, "name")
+        assert name_field.get_attribute("value") == name
+
+        name_field.send_keys(new_name)
+
+        self.browser.find_element(By.NAME, "submit").click()
 
     def _navigate_to_registers(self):
         registers_link = self.browser.find_element(By.LINK_TEXT, "Registers")
@@ -70,9 +81,19 @@ class Driver:
         register_heading = self.browser.find_element(By.TAG_NAME, "h1")
         assert register_heading.text == "Registers"
 
+    def _view_register(self, name):
+        register_link = self.browser.find_element(By.LINK_TEXT, name)
+        register_link.click()
+
+        page_heading = self.browser.find_element(By.TAG_NAME, "h1")
+        assert page_heading.text == name
 
     def _confirm_page_has_errors(self):
         assert self.browser.title.startswith("Error: ")
 
         error_heading = self.browser.find_element(By.XPATH, "//h2[contains(text(),'There is a problem')]")
         assert error_heading is not None, "Error heading not found"
+
+    def confirm_register_updated(self, name):
+
+        pass
