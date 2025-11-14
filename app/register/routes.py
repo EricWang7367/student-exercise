@@ -7,7 +7,7 @@ from werkzeug import Response
 from app import db
 from app.models import Register
 from app.register import bp
-from app.register.forms import RegisterForm
+from app.register.forms import RegisterDeleteForm, RegisterForm
 
 
 @bp.route("/", methods=["GET"])
@@ -50,3 +50,17 @@ def edit(id: UUID) -> Union[str, Response]:
         return redirect(url_for("register.index"))
 
     return render_template("register/edit.html", register=register, form=form)
+
+
+@bp.route("/<uuid:id>/delete", methods=["GET", "POST"])
+def delete(id: UUID) -> Union[str, Response]:
+    register = db.get_or_404(Register, id)
+    form = RegisterDeleteForm()
+
+    if form.validate_on_submit():
+        db.session.delete(register)
+        db.session.commit()
+        flash("Successfully deleted register", "success")
+        return redirect(url_for("register.index"))
+
+    return render_template("/register/delete.html", register=register, form=form)

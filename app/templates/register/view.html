@@ -17,10 +17,17 @@
     {{ super() }}
     <span class="govuk-caption-l">Register</span>
     <h1 class="govuk-heading-l">{{ register.name }}</h1>
-    {{ govukButton({
-      'text': "Edit register",
-      'href': url_for('register.edit', id=register.id)
-    }) }}
+    <div class="govuk-button-group">
+      {{ govukButton({
+        'text': "Edit register",
+        'href': url_for('register.edit', id=register.id)
+      }) }}
+      {{ govukButton({
+        'text': "Delete register",
+        'classes': "govuk-button--secondary",
+        'href': url_for('register.delete', id=register.id)
+      }) }}
+    </div>
   </div>
 </div>
 {%- endblock -%}
