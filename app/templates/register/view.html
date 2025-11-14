@@ -1,0 +1,21 @@
+{%- extends "base.html" -%}
+
+{%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
+
+{%- block beforeContent -%}
+{{ super() }}
+{{ govukBackLink({
+  'text': "Back",
+  'href': url_for('register.index')
+}) }}
+{%- endblock -%}
+
+{%- block content -%}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {{ super() }}
+    <span class="govuk-caption-l">Register</span>
+    <h1 class="govuk-heading-l">{{ register.name }}</h1>
+  </div>
+</div>
+{%- endblock -%}

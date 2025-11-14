@@ -15,9 +15,13 @@
       'text': "Create new register",
       'href': url_for('register.create')
     }) }}
-    {% for register in registers %}
-      <p class="govuk-body">{{ register.name }}</p>
-    {% endfor %}
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      {% for register in registers %}
+      <li>
+        <a class="govuk-link" href="{{ url_for('register.view', id=register.id) }}">{{ register.name }}</a>
+      </li>
+      {% endfor %}
+    </ul>
   </div>
 </div>
 {%- endblock -%}

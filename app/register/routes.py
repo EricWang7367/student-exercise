@@ -1,4 +1,5 @@
 from typing import Union
+from uuid import UUID
 
 from flask import flash, redirect, render_template, url_for
 from werkzeug import Response
@@ -27,3 +28,9 @@ def create() -> Union[str, Response]:
         return redirect(url_for("register.index"))
 
     return render_template("register/create.html", form=form)
+
+
+@bp.route("/<uuid:id>", methods=["GET"])
+def view(id: UUID) -> str:
+    register = db.get_or_404(Register, id)
+    return render_template("register/view.html", register=register)
