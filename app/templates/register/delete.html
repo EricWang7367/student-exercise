@@ -9,7 +9,7 @@
   <div class="govuk-grid-column-two-thirds">
     {{ super() }}
     <h1 class="govuk-heading-l">Are you sure you want to delete the {{ register.name }} register?</h1>
-    <form method="post" action="{{ url_for('register.delete', id=register.id) }}" novalidate>
+    <form method="post" action="{{ url_for('register.delete', register_id=register.id) }}" novalidate>
       {{ form.csrf_token }}
       {{ form.confirm }}
       <div class="govuk-button-group">
@@ -17,7 +17,7 @@
           'preventDoubleClick': true,
           'classes': "govuk-button--warning"
         }) }}
-        <a class="govuk-link" href="{{ url_for('register.view', id=register.id) }}">Cancel</a>
+        <a class="govuk-link" href="{{ url_for('register.view', register_id=register.id) }}">Cancel</a>
       </div>
   </div>
 </div>

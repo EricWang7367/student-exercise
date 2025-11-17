@@ -85,14 +85,14 @@ def create() -> Union[str, Response]:
     return render_template("register/create.html", form=form)
 
 
-@bp.route("/<uuid:id>", methods=["GET"])
-def view(id: UUID) -> str:
+@bp.route("/<uuid:register_id>", methods=["GET"])
+def view(register_id: UUID) -> str:
     """
     View a single Register by its UUID.
 
     Parameters
     ----------
-    id : UUID
+    register_id : UUID
         The unique identifier of the Register to display.
 
     Returns
@@ -101,14 +101,14 @@ def view(id: UUID) -> str:
         The rendered HTML of the detail page.
     """
     # Fetch the register or return a 404 response if it doesn't exist.
-    register = db.get_or_404(Register, id)
+    register = db.get_or_404(Register, register_id)
 
     # Render the detail page for this specific register.
     return render_template("register/view.html", register=register)
 
 
-@bp.route("/<uuid:id>/edit", methods=["GET", "POST"])
-def edit(id: UUID) -> Union[str, Response]:
+@bp.route("/<uuid:register_id>/edit", methods=["GET", "POST"])
+def edit(register_id: UUID) -> Union[str, Response]:
     """
     Edit an existing Register.
 
@@ -119,7 +119,7 @@ def edit(id: UUID) -> Union[str, Response]:
 
     Parameters
     ----------
-    id : UUID
+    register_id : UUID
         The unique identifier of the Register to edit.
 
     Returns
@@ -129,7 +129,7 @@ def edit(id: UUID) -> Union[str, Response]:
         - On success: A redirect response back to the index page.
     """
     # Retrieve the register to edit or 404 if it doesn't exist.
-    register: Register = db.get_or_404(Register, id)
+    register: Register = db.get_or_404(Register, register_id)
     form = RegisterForm()
 
     if request.method == "GET":
@@ -149,8 +149,8 @@ def edit(id: UUID) -> Union[str, Response]:
     return render_template("register/edit.html", register=register, form=form)
 
 
-@bp.route("/<uuid:id>/delete", methods=["GET", "POST"])
-def delete(id: UUID) -> Union[str, Response]:
+@bp.route("/<uuid:register_id>/delete", methods=["GET", "POST"])
+def delete(register_id: UUID) -> Union[str, Response]:
     """
     Delete an existing Register.
 
@@ -161,7 +161,7 @@ def delete(id: UUID) -> Union[str, Response]:
 
     Parameters
     ----------
-    id : UUID
+    register_id : UUID
         The unique identifier of the Register to delete.
 
     Returns
@@ -171,7 +171,7 @@ def delete(id: UUID) -> Union[str, Response]:
         - On success: A redirect response back to the index page.
     """
     # Load the target register or show a 404 if not found.
-    register = db.get_or_404(Register, id)
+    register = db.get_or_404(Register, register_id)
 
     form = RegisterDeleteForm()
 

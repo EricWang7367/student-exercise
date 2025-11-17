@@ -20,12 +20,12 @@
     <div class="govuk-button-group">
       {{ govukButton({
         'text': "Edit register",
-        'href': url_for('register.edit', id=register.id)
+        'href': url_for('register.edit', register_id=register.id)
       }) }}
       {{ govukButton({
         'text': "Delete register",
         'classes': "govuk-button--secondary",
-        'href': url_for('register.delete', id=register.id)
+        'href': url_for('register.delete', register_id=register.id)
       }) }}
     </div>
   </div>

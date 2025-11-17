@@ -18,7 +18,7 @@
     <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
       {% for register in registers %}
       <li>
-        <a class="govuk-link" href="{{ url_for('register.view', id=register.id) }}">{{ register.name }}</a>
+        <a class="govuk-link" href="{{ url_for('register.view', register_id=register.id) }}">{{ register.name }}</a>
       </li>
       {% endfor %}
     </ul>
