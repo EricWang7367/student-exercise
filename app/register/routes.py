@@ -142,7 +142,7 @@ def edit(register_id: UUID) -> Union[str, Response]:
         # Persist the changes to the database.
         db.session.commit()
 
-        flash("Successfully edited register", "success")
+        flash("Successfully updated register", "success")
         return redirect(url_for("register.index"))
 
     # Either initial GET or POST with validation errors -> render the form.
