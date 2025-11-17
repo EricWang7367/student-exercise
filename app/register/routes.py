@@ -44,7 +44,7 @@ def index() -> str:
     registers = db.session.execute(db.select(Register)).scalars().all()
 
     # Render a Jinja template and inject the list of registers into it.
-    return render_template("register/list.html", registers=registers)
+    return render_template("register/index.html", registers=registers)
 
 
 @bp.route("/new", methods=["GET", "POST"])
