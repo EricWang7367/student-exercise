@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.common import NoSuchElementException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -70,9 +71,26 @@ class Driver:
         name_field = self.browser.find_element(By.NAME, "name")
         assert name_field.get_attribute("value") == name
 
+        name_field.clear()
         name_field.send_keys(new_name)
 
         self.browser.find_element(By.NAME, "submit").click()
+
+
+    def confirm_register_updated(self, old_name, new_name):
+        updated_message = self.browser.find_element(By.XPATH, "//*[contains(text(),'Successfully updated register')]")
+        assert updated_message is not None, "Updated message not found"
+
+        self._navigate_to_registers()
+
+        try:
+            self.browser.find_element(By.XPATH, f"//*[contains(text(), '{old_name}')]")
+            raise AssertionError("Register with old name still exists")
+        except NoSuchElementException:
+            pass
+
+        new_register = self.browser.find_element(By.XPATH, f"//*[contains(text(), '{new_name}')]")
+        assert new_register is not None, "Register with new name not found"
 
     def _navigate_to_registers(self):
         registers_link = self.browser.find_element(By.LINK_TEXT, "Registers")
@@ -94,6 +112,3 @@ class Driver:
         error_heading = self.browser.find_element(By.XPATH, "//h2[contains(text(),'There is a problem')]")
         assert error_heading is not None, "Error heading not found"
 
-    def confirm_register_updated(self, name):
-
-        pass

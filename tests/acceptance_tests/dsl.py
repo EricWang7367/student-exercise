@@ -38,10 +38,16 @@ class Dsl:
         self.driver.confirm_can_view_register(self._encode_alias(name))
 
     def update_existing_register(self, name=DEFAULT_REGISTER_NAME):
-        self.driver.update_existing_register(self._encode_alias(name), self._encode_alias("Updated" + name))
+        alias = self._encode_alias(name)
+        self.driver.update_existing_register(alias, self._update_name(alias))
 
     def confirm_register_updated(self, name=DEFAULT_REGISTER_NAME):
-        self.driver.confirm_register_updated(self._decode_alias("Updated " + name))
+        alias = self._decode_alias(name)
+        self.driver.confirm_register_updated(alias, self._update_name(alias))
+
+    def _update_name(self, name):
+        middle = len(name) // 2
+        return name[:middle] + "updated" + name[middle:]
 
     def _encode_alias(self, name):
         if name == "":
