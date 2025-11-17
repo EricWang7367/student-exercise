@@ -74,7 +74,6 @@ class Driver:
 
         self.browser.find_element(By.NAME, "submit").click()
 
-
     def confirm_register_updated(self, old_name, new_name):
         updated_message = self.browser.find_element(By.XPATH, "//*[contains(text(),'Successfully updated register')]")
         assert updated_message is not None, "Updated message not found"
@@ -109,4 +108,3 @@ class Driver:
 
         error_heading = self.browser.find_element(By.XPATH, "//h2[contains(text(),'There is a problem')]")
         assert error_heading is not None, "Error heading not found"
-
