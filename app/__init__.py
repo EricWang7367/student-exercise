@@ -91,12 +91,9 @@ def create_app(config_class: Type[Config] = Config) -> Flask:
 
     # --- REGISTER BLUEPRINTS ---
     # Blueprints group related routes and templates
-    from app.entry import bp as entry_bp
     from app.main import bp as main_bp
     from app.register import bp as register_bp
 
-    # Nest the Entry blueprint under the Register blueprint
-    register_bp.register_blueprint(entry_bp)
     # Register the main blueprint for generic routes
     app.register_blueprint(main_bp)
     # Register the Register blueprint (including nested Entry blueprint)

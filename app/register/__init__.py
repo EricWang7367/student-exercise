@@ -19,6 +19,8 @@ to add URL routes that belong to the "register" part of the application.
 
 from flask import Blueprint
 
+from app.entry import bp as entry_bp
+
 # Create a blueprint named "register".
 #
 # - The first argument ("register") is the internal name of the blueprint.
@@ -32,6 +34,9 @@ from flask import Blueprint
 #     /registers/
 #
 bp: Blueprint = Blueprint("register", __name__, url_prefix="/registers")
+
+# Nest the Entry blueprint under the Register blueprint
+bp.register_blueprint(entry_bp)
 
 # Import routes AFTER the blueprint is created.
 #
