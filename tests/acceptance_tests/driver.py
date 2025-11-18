@@ -50,6 +50,9 @@ class Driver:
         success_message = self.browser.find_element(By.XPATH, "//*[contains(text(),'Successfully created register')]")
         assert success_message is not None, "Success message not found"
 
+        self.confirm_register_exists(name)
+
+    def confirm_register_exists(self, name):
         self._navigate_to_registers()
 
         existing_register = self.browser.find_element(By.XPATH, f"//*[contains(text(),'{name}')]")
@@ -88,6 +91,39 @@ class Driver:
 
         new_register = self.browser.find_element(By.XPATH, f"//*[contains(text(), '{new_name}')]")
         assert new_register is not None, "Register with new name not found"
+
+    def delete_existing_register(self, name):
+        self._navigate_to_registers()
+        self._view_register(name)
+
+        delete_link = self.browser.find_element(By.LINK_TEXT, "Delete register")
+        delete_link.click()
+
+    def confirm_deletion_requires_confirmation(self, name):
+        confirmation_prompt = self.browser.find_element(By.XPATH, f"//*[contains(text(),'Are you sure you want to delete the {name} register?')]")
+        assert confirmation_prompt is not None, "Confirmation prompt not found"
+
+    def cancel_register_deletion(self, name):
+        cancel_link = self.browser.find_element(By.LINK_TEXT, "Cancel")
+        cancel_link.click()
+
+    def confirm_register_deletion(self, alias):
+        confirm_checkbox = self.browser.find_element(By.NAME, "confirm")
+        confirm_checkbox.click()
+
+        self.browser.find_element(By.NAME, "submit").click()
+
+    def confirm_register_deleted(self, name):
+        deleted_message = self.browser.find_element(By.XPATH, "//*[contains(text(),'Successfully deleted register')]")
+        assert deleted_message is not None, "Deleted message not found"
+
+        self._navigate_to_registers()
+
+        try:
+            self.browser.find_element(By.XPATH, f"//*[contains(text(), '{name}')]")
+            raise AssertionError("Deleted register still exists")
+        except NoSuchElementException:
+            pass
 
     def _navigate_to_registers(self):
         registers_link = self.browser.find_element(By.LINK_TEXT, "Registers")

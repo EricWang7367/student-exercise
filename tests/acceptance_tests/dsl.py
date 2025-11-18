@@ -37,17 +37,39 @@ class Dsl:
     def confirm_can_view_register(self, name=DEFAULT_REGISTER_NAME):
         self.driver.confirm_can_view_register(self._encode_alias(name))
 
-    def update_existing_register(self, name=DEFAULT_REGISTER_NAME):
+    def update_existing_register(self, current_name=DEFAULT_REGISTER_NAME, new_name=""):
+        current_name_alias = self._encode_alias(current_name)
+        new_name_alias = self._encode_alias(new_name)
+        self.driver.update_existing_register(current_name_alias, new_name_alias)
+
+    def confirm_register_updated(self, old_name=DEFAULT_REGISTER_NAME, new_name=""):
+        old_name_alias = self._decode_alias(old_name)
+        new_name_alias = self._decode_alias(new_name)
+        self.driver.confirm_register_updated(old_name_alias, new_name_alias)
+
+    def delete_existing_register(self, name=DEFAULT_REGISTER_NAME):
         alias = self._encode_alias(name)
-        self.driver.update_existing_register(alias, self._update_name(alias))
+        self.driver.delete_existing_register(alias)
 
-    def confirm_register_updated(self, name=DEFAULT_REGISTER_NAME):
+    def confirm_deletion_requires_confirmation(self, name=DEFAULT_REGISTER_NAME):
         alias = self._decode_alias(name)
-        self.driver.confirm_register_updated(alias, self._update_name(alias))
+        self.driver.confirm_deletion_requires_confirmation(alias)
 
-    def _update_name(self, name):
-        middle = len(name) // 2
-        return name[:middle] + "updated" + name[middle:]
+    def cancel_register_deletion(self, name=DEFAULT_REGISTER_NAME):
+        alias = self._decode_alias(name)
+        self.driver.cancel_register_deletion(alias)
+
+    def confirm_register_deletion(self, name=DEFAULT_REGISTER_NAME):
+        alias = self._decode_alias(name)
+        self.driver.confirm_register_deletion(alias)
+
+    def confirm_register_deleted(self, name=DEFAULT_REGISTER_NAME):
+        alias = self._decode_alias(name)
+        self.driver.confirm_register_deleted(alias)
+
+    def confirm_register_exists(self, name=DEFAULT_REGISTER_NAME):
+        alias = self._decode_alias(name)
+        self.driver.confirm_register_exists(alias)
 
     def _encode_alias(self, name):
         if name == "":
