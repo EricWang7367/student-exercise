@@ -100,7 +100,10 @@ class Driver:
         delete_link.click()
 
     def confirm_deletion_requires_confirmation(self, name):
-        confirmation_prompt = self.browser.find_element(By.XPATH, f"//*[contains(text(),'Are you sure you want to delete the {name} register?')]")
+        confirmation_prompt = self.browser.find_element(
+            By.XPATH,
+            f"//*[contains(text(),'Are you sure you want to delete the {name} register?')]",
+        )
         assert confirmation_prompt is not None, "Confirmation prompt not found"
 
     def cancel_register_deletion(self, name):
