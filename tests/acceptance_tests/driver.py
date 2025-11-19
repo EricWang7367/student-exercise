@@ -11,7 +11,7 @@ class Driver:
         options.add_argument("--headless")
         options.add_argument("--ignore-certificate-errors")
         self.browser = webdriver.Chrome(options=options)
-        self.browser.implicitly_wait(5) # seconds
+        self.browser.implicitly_wait(5)  # seconds
         self.base_url = base_url
 
     def setup(self):
