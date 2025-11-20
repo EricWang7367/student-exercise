@@ -86,11 +86,15 @@ class Dsl:
         self.driver.confirm_register_exists(alias)
 
     def ensure_existing_entry(self, register=DEFAULT_REGISTER_NAME, entry_name=DEFAULT_ENTRY_NAME):
-        self.add_entry_to_register(register = register, entry_name = entry_name)
-        self.confirm_entry_added(register = register, entry_name = entry_name)
+        self.add_entry_to_register(register=register, entry_name=entry_name)
+        self.confirm_entry_added(register=register, entry_name=entry_name)
 
     def add_entry_to_register(self, register=DEFAULT_REGISTER_NAME, entry_name=DEFAULT_ENTRY_NAME):
-        self.driver.add_entry_to_register(register = self._encode_alias(register), entry_name = self._encode_alias(entry_name))
+        self.driver.add_entry_to_register(
+            register=self._encode_alias(register), entry_name=self._encode_alias(entry_name)
+        )
 
     def confirm_entry_added(self, register=DEFAULT_REGISTER_NAME, entry_name=DEFAULT_ENTRY_NAME):
-        self.driver.confirm_entry_added(register = self._decode_alias(register), entry_name = self._decode_alias(entry_name))
+        self.driver.confirm_entry_added(
+            register=self._decode_alias(register), entry_name=self._decode_alias(entry_name)
+        )

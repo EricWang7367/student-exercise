@@ -165,7 +165,9 @@ class Driver:
         self.browser.find_element(By.NAME, "submit").click()
 
     def confirm_entry_added(self, register, entry_name):
-        added_message = self.browser.find_element(By.XPATH, "//*[contains(text(),'Successfully added entry to register')]")
+        added_message = self.browser.find_element(
+            By.XPATH, "//*[contains(text(),'Successfully added entry to register')]"
+        )
         assert added_message is not None, "Success message not found"
 
         self.confirm_entry_exists(register, entry_name)

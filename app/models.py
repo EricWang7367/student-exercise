@@ -17,6 +17,7 @@ import uuid
 from typing import TYPE_CHECKING, List
 
 from sqlalchemy import ForeignKey, UniqueConstraint
+
 # PostgreSQL UUID type for database columns
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -79,6 +80,7 @@ class Register(Model):
         order_by="Entry.name",
     )
 
+
 class Entry(Model):
     """
     Represents an Entry record in the database.
@@ -108,14 +110,10 @@ class Entry(Model):
 
     # Foreign keys
     register_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("register.id", ondelete="RESTRICT"),
-        nullable=False,
-        index=True
+        ForeignKey("register.id", ondelete="RESTRICT"), nullable=False, index=True
     )
 
     # Relationships
     register: Mapped["Register"] = relationship("Register", back_populates="entries")
 
-    __table_args__ = (
-        UniqueConstraint('name', 'register_id', name='_entry_name_register_uc'),
-    )
+    __table_args__ = (UniqueConstraint("name", "register_id", name="_entry_name_register_uc"),)

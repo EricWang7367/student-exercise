@@ -11,7 +11,7 @@ typical CRUD pattern:
 - edit():    Update an existing entry in a specific register
 - delete():  Delete an existing entry in a specific register
 """
-from typing import Any
+
 from uuid import UUID
 
 from flask import flash, redirect, url_for, render_template
