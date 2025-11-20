@@ -28,6 +28,20 @@
         'href': url_for('register.delete', register_id=register.id)
       }) }}
     </div>
+    <h1 class="govuk-heading-l">Entries</h1>
+    <div class="govuk-button-group">
+      {{ govukButton({
+        'text': "Add new entry",
+        'href': url_for('register.entry.add', register_id=register.id)
+      }) }}
+    </div>
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+      {% for entry in register.entries %}
+      <li>
+        {{ entry.name }}
+      </li>
+      {% endfor %}
+    </ul>
   </div>
 </div>
 {%- endblock -%}

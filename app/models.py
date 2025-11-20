@@ -14,11 +14,12 @@ Notes for Students:
 """
 
 import uuid
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
+from sqlalchemy import ForeignKey, UniqueConstraint
 # PostgreSQL UUID type for database columns
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app import db
 
@@ -70,4 +71,51 @@ class Register(Model):
         nullable=False,  # Cannot be empty
         unique=True,  # Each register name must be unique
         index=True,  # Database index for faster search
+    )
+
+    entries: Mapped[List["Entry"]] = relationship(
+        "Entry",
+        back_populates="register",
+        order_by="Entry.name",
+    )
+
+class Entry(Model):
+    """
+    Represents an Entry record in the database.
+
+    Attributes
+    ----------
+    id : uuid.UUID
+        Primary key for the Entry. Automatically generated using uuid4.
+    name : str
+        A human-readable name for the entry.
+        Must be unique and cannot be null. Indexed for faster lookups.
+    """
+
+    # Primary key column using UUID
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),  # Store as UUID in PostgreSQL
+        primary_key=True,  # Primary key
+        default=uuid.uuid4,  # Auto-generate a UUID
+    )
+
+    # Name column for the register
+    name: Mapped[str] = mapped_column(
+        nullable=False,  # Cannot be empty
+        unique=True,  # Each register name must be unique
+        index=True,  # Database index for faster search
+    )
+
+    # Foreign keys
+    register_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("register.id", ondelete="RESTRICT"),
+        nullable=False,
+        index=True
+    )
+
+    # Relationships
+    register: Mapped["Register"] = relationship("Register", back_populates="entries")
+
+    __table_args__ = (
+        UniqueConstraint('name', 'register_id', name='_entry_name_register_uc'),
     )

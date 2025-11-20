@@ -11,12 +11,33 @@ typical CRUD pattern:
 - edit():    Update an existing entry in a specific register
 - delete():  Delete an existing entry in a specific register
 """
-
+from typing import Any
 from uuid import UUID
 
+from flask import flash, redirect, url_for, render_template
+from werkzeug import Response
+
+from app import db
 from app.entry import bp
+from app.entry.forms import EntryForm
+from app.models import Entry
 
 
-@bp.route("/", methods=["GET"])
-def index(register_id: UUID) -> str:
-    pass
+@bp.route("/add", methods=["GET", "POST"])
+def add(register_id: UUID) -> str | Response:
+    form = EntryForm(register_id=register_id)
+
+    # Flask-WTF handles form validation and CSRF protection for us.
+    # We don't need to manually check request.form or HTML inputs.
+    if form.validate_on_submit():
+        entry = Entry(name=form.name.data, register_id=register_id)
+        db.session.add(entry)
+        db.session.commit()
+        flash("Successfully added entry to register", "success")
+
+        # Redirect to follow the Post/Redirect/Get (PRG) pattern
+        # This prevents duplicate form submissions if the user refreshes
+        return redirect(url_for("register.view", register_id=register_id))
+
+    # Render the form for GET requests or if validation fails
+    return render_template("entry/add.html", form=form)

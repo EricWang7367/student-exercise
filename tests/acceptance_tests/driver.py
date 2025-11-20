@@ -153,7 +153,7 @@ class Driver:
         self._navigate_to_registers()
         self._view_register(register)
 
-        add_entry_link = self.browser.find_element(By.LINK_TEXT, "Add entry")
+        add_entry_link = self.browser.find_element(By.LINK_TEXT, "Add new entry")
         add_entry_link.click()
 
         heading = self.browser.find_element(By.TAG_NAME, "h1")

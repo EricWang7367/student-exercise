@@ -1,0 +1,26 @@
+{%- extends "base.html" -%}
+
+{%- block beforeContent -%}
+{{ super() }}
+{%- endblock -%}
+
+{%- block content -%}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {{ super() }}
+    <h1 class="govuk-heading-l">Add new entry</h1>
+    <form method="post" action="{{ url_for('register.entry.add', register_id=form.register_id) }}" novalidate>
+        {{ form.csrf_token }}
+        {{ form.name(params={
+            'spellcheck': true
+        }) }}
+        <div class="govuk-button-group">
+            {{ form.submit(params={
+            'preventDoubleClick': true
+            }) }}
+            <a class="govuk-link" href="{{ url_for('register.view', register_id=form.register_id) }}">Cancel</a>
+        </div>
+    </form>
+  </div>
+</div>
+{%- endblock -%}

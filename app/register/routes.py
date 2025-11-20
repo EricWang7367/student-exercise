@@ -22,7 +22,6 @@ Notes for students:
     - Flask converts it automatically into a Python `UUID` object
 """
 
-from typing import Union
 from uuid import UUID
 
 from flask import flash, redirect, render_template, request, url_for
@@ -32,6 +31,7 @@ from app import db
 from app.models import Register
 from app.register import bp
 from app.register.forms import RegisterDeleteForm, RegisterForm
+
 
 # --- ROUTES FOR REGISTER CRUD OPERATIONS ---
 #
@@ -63,7 +63,7 @@ def index() -> str:
 
 
 @bp.route("/new", methods=["GET", "POST"])
-def create() -> Union[str, Response]:
+def create() -> str | Response:
     """
     Create a new Register.
 
@@ -119,7 +119,7 @@ def view(register_id: UUID) -> str:
 
 
 @bp.route("/<uuid:register_id>/edit", methods=["GET", "POST"])
-def edit(register_id: UUID) -> Union[str, Response]:
+def edit(register_id: UUID) -> str | Response:
     """
     Edit an existing Register.
 
@@ -156,7 +156,7 @@ def edit(register_id: UUID) -> Union[str, Response]:
 
 
 @bp.route("/<uuid:register_id>/delete", methods=["GET", "POST"])
-def delete(register_id: UUID) -> Union[str, Response]:
+def delete(register_id: UUID) -> str | Response:
     """
     Delete an existing Register.
 
