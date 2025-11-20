@@ -148,3 +148,31 @@ class Driver:
 
         error_heading = self.browser.find_element(By.XPATH, "//h2[contains(text(),'There is a problem')]")
         assert error_heading is not None, "Error heading not found"
+
+    def add_entry_to_register(self, register, entry_name):
+        self._navigate_to_registers()
+        self._view_register(register)
+
+        add_entry_link = self.browser.find_element(By.LINK_TEXT, "Add entry")
+        add_entry_link.click()
+
+        heading = self.browser.find_element(By.TAG_NAME, "h1")
+        assert heading.text == "Add new entry"
+
+        name_field = self.browser.find_element(By.NAME, "name")
+        name_field.send_keys(entry_name)
+
+        self.browser.find_element(By.NAME, "submit").click()
+
+    def confirm_entry_added(self, register, entry_name):
+        added_message = self.browser.find_element(By.XPATH, "//*[contains(text(),'Successfully added entry to register')]")
+        assert added_message is not None, "Success message not found"
+
+        self.confirm_entry_exists(register, entry_name)
+
+    def confirm_entry_exists(self, register, entry_name):
+        self._navigate_to_registers()
+        self._view_register(register)
+
+        existing_entry = self.browser.find_element(By.XPATH, f"//*[contains(text(),'{entry_name}')]")
+        assert existing_entry is not None, "Entry not found in register"

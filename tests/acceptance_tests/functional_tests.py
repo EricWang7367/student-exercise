@@ -4,10 +4,10 @@ from tests.acceptance_tests.driver import Driver
 from tests.acceptance_tests.dsl import Dsl
 
 
-class RegisterTests(TestCase):
+class FunctionalTests(TestCase):
 
     def __init__(self, *args, **kwargs):
-        super(RegisterTests, self).__init__(*args, **kwargs)
+        super(FunctionalTests, self).__init__(*args, **kwargs)
         self.dsl = Dsl(Driver(base_url="https://localhost/"))
 
     def setUp(self):
@@ -62,3 +62,19 @@ class RegisterTests(TestCase):
         self.dsl.confirm_deletion_requires_confirmation()
         self.dsl.cancel_register_deletion()
         self.dsl.confirm_register_exists()
+
+    def test_add_entry_name_required(self):
+        self.dsl.ensure_existing_register()
+        self.dsl.add_entry_to_register(entry_name="")
+        self.dsl.confirm_name_required_validation_error()
+
+    def test_add_entry_name_must_be_unique(self):
+        self.dsl.ensure_existing_register()
+        self.dsl.ensure_existing_entry(entry_name="Existing entry")
+        self.dsl.add_entry_to_register(entry_name="Existing entry")
+        self.dsl.confirm_name_already_exists_validation_error()
+
+    def test_can_add_entry(self):
+        self.dsl.ensure_existing_register()
+        self.dsl.add_entry_to_register()
+        self.dsl.confirm_entry_added()

@@ -7,10 +7,24 @@ from tests.acceptance_tests.driver import Driver
 class Dsl:
 
     DEFAULT_REGISTER_NAME = "Register of Things"
+    DEFAULT_ENTRY_NAME = "An entry"
 
     def __init__(self, driver: Driver):
         self.driver = driver
         self.aliases: Dict[str, str] = {}
+
+    def _encode_alias(self, name):
+        if name == "":
+            return ""
+        if name not in self.aliases:
+            self.aliases[name] = name + str(round(time.time() * 1000))
+        return self.aliases[name]
+
+    def _decode_alias(self, name):
+        if name in self.aliases:
+            return self.aliases[name]
+        else:
+            return ""
 
     def setup(self):
         self.driver.setup()
@@ -71,15 +85,12 @@ class Dsl:
         alias = self._decode_alias(name)
         self.driver.confirm_register_exists(alias)
 
-    def _encode_alias(self, name):
-        if name == "":
-            return ""
-        if name not in self.aliases:
-            self.aliases[name] = name + str(round(time.time() * 1000))
-        return self.aliases[name]
+    def ensure_existing_entry(self, register=DEFAULT_REGISTER_NAME, entry_name=DEFAULT_ENTRY_NAME):
+        self.add_entry_to_register(register = register, entry_name = entry_name)
+        self.confirm_entry_added(register = register, entry_name = entry_name)
 
-    def _decode_alias(self, name):
-        if name in self.aliases:
-            return self.aliases[name]
-        else:
-            return ""
+    def add_entry_to_register(self, register=DEFAULT_REGISTER_NAME, entry_name=DEFAULT_ENTRY_NAME):
+        self.driver.add_entry_to_register(register = self._encode_alias(register), entry_name = self._encode_alias(entry_name))
+
+    def confirm_entry_added(self, register=DEFAULT_REGISTER_NAME, entry_name=DEFAULT_ENTRY_NAME):
+        self.driver.confirm_entry_added(register = self._decode_alias(register), entry_name = self._decode_alias(entry_name))
