@@ -1,7 +1,9 @@
 from selenium import webdriver
 from selenium.common import NoSuchElementException
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
+from selenium.webdriver.common.by import By, ByType
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 class Driver:
@@ -11,8 +13,31 @@ class Driver:
         options.add_argument("--headless")
         options.add_argument("--ignore-certificate-errors")
         self.browser = webdriver.Chrome(options=options)
-        self.browser.implicitly_wait(5)  # seconds
         self.base_url = base_url
+
+    def _navigate_to_registers(self):
+        self._find_and_click(By.LINK_TEXT, "Registers")
+
+        register_heading = self.browser.find_element(By.TAG_NAME, "h1")
+        assert register_heading.text == "Registers"
+
+    def _view_register(self, name):
+        self._find_and_click(By.LINK_TEXT, name)
+
+        page_heading = self.browser.find_element(By.TAG_NAME, "h1")
+        assert page_heading.text == name
+
+    def _find_and_click(self, by: ByType, locator: str):
+        link = WebDriverWait(self.browser, 5).until(EC.element_to_be_clickable((by, locator)))
+        link.click()
+        WebDriverWait(self.browser, 5).until(EC.staleness_of(link))
+
+    def _confirm_page_has_errors(self):
+        WebDriverWait(self.browser, 5).until(EC.title_contains("Error:"))
+        assert self.browser.title.startswith("Error: ")
+
+        error_heading = self.browser.find_element(By.XPATH, "//h2[contains(text(),'There is a problem')]")
+        assert error_heading is not None, "Error heading not found"
 
     def setup(self):
         self.browser.get(self.base_url)
@@ -24,8 +49,7 @@ class Driver:
     def create_new_register(self, name):
         self._navigate_to_registers()
 
-        create_link = self.browser.find_element(By.LINK_TEXT, "Create new register")
-        create_link.click()
+        self._find_and_click(By.LINK_TEXT, "Create new register")
 
         heading = self.browser.find_element(By.TAG_NAME, "h1")
         assert heading.text == "Create new register"
@@ -67,8 +91,7 @@ class Driver:
         self._navigate_to_registers()
         self._view_register(name)
 
-        edit_link = self.browser.find_element(By.LINK_TEXT, "Edit register")
-        edit_link.click()
+        self._find_and_click(By.LINK_TEXT, "Edit register")
 
         name_field = self.browser.find_element(By.NAME, "name")
         assert name_field.get_attribute("value") == name
@@ -97,8 +120,7 @@ class Driver:
         self._navigate_to_registers()
         self._view_register(name)
 
-        delete_link = self.browser.find_element(By.LINK_TEXT, "Delete register")
-        delete_link.click()
+        self._find_and_click(By.LINK_TEXT, "Delete register")
 
     def confirm_deletion_requires_confirmation(self, name):
         confirmation_prompt = self.browser.find_element(
@@ -108,8 +130,7 @@ class Driver:
         assert confirmation_prompt is not None, "Confirmation prompt not found"
 
     def cancel_register_deletion(self, name):
-        cancel_link = self.browser.find_element(By.LINK_TEXT, "Cancel")
-        cancel_link.click()
+        self._find_and_click(By.LINK_TEXT, "Cancel")
 
     def confirm_register_deletion(self, alias):
         confirm_checkbox = self.browser.find_element(By.NAME, "confirm")
@@ -129,32 +150,11 @@ class Driver:
         except NoSuchElementException:
             pass
 
-    def _navigate_to_registers(self):
-        registers_link = self.browser.find_element(By.LINK_TEXT, "Registers")
-        registers_link.click()
-
-        register_heading = self.browser.find_element(By.TAG_NAME, "h1")
-        assert register_heading.text == "Registers"
-
-    def _view_register(self, name):
-        register_link = self.browser.find_element(By.LINK_TEXT, name)
-        register_link.click()
-
-        page_heading = self.browser.find_element(By.TAG_NAME, "h1")
-        assert page_heading.text == name
-
-    def _confirm_page_has_errors(self):
-        assert self.browser.title.startswith("Error: ")
-
-        error_heading = self.browser.find_element(By.XPATH, "//h2[contains(text(),'There is a problem')]")
-        assert error_heading is not None, "Error heading not found"
-
     def add_entry_to_register(self, register, entry_name):
         self._navigate_to_registers()
         self._view_register(register)
 
-        add_entry_link = self.browser.find_element(By.LINK_TEXT, "Add new entry")
-        add_entry_link.click()
+        self._find_and_click(By.LINK_TEXT, "Add new entry")
 
         heading = self.browser.find_element(By.TAG_NAME, "h1")
         assert heading.text == "Add new entry"
