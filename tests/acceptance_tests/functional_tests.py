@@ -85,3 +85,8 @@ class FunctionalTests(TestCase):
         self.dsl.ensure_existing_entry(register="Register A", entry_name="Entry 1")
         self.dsl.add_entry_to_register(register="Register B", entry_name="Entry 1")
         self.dsl.confirm_entry_added(register="Register B", entry_name="Entry 1")
+
+    def test_can_view_entry(self):
+        self.dsl.ensure_existing_register()
+        self.dsl.ensure_existing_entry()
+        self.dsl.confirm_can_view_entry()

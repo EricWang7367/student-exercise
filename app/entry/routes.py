@@ -41,3 +41,22 @@ def add(register_id: UUID) -> str | Response:
 
     # Render the form for GET requests or if validation fails
     return render_template("entry/add.html", form=form)
+
+
+@bp.route("/<uuid:entry_id>", methods=["GET"])
+def view(register_id: UUID, entry_id: UUID) -> str:
+    """
+    View a single Entry by its UUID.
+
+    Parameters:
+    - register_id (UUID): The unique identifier of the Register
+    - entry_id (UUID): The unique identifier of the Entry
+
+    Returns:
+    - str: Rendered HTML page showing the register entry details
+    """
+    # Fetch the entry or return a 404 page if it does not exist
+    entry = db.one_or_404(db.select(Entry).filter_by(register_id=register_id, id=entry_id))
+
+    # Render the detail page for this register
+    return render_template("entry/view.html", entry=entry)

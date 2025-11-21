@@ -27,6 +27,12 @@ class Driver:
         page_heading = self.browser.find_element(By.TAG_NAME, "h1")
         assert page_heading.text == name
 
+    def _view_entry(self, entry_name):
+        self._find_and_click(By.LINK_TEXT, entry_name)
+
+        page_heading = self.browser.find_element(By.TAG_NAME, "h1")
+        assert page_heading.text == entry_name
+
     def _find_and_click(self, by: ByType, locator: str):
         link = WebDriverWait(self.browser, 5).until(EC.element_to_be_clickable((by, locator)))
         link.click()
@@ -178,3 +184,8 @@ class Driver:
 
         existing_entry = self.browser.find_element(By.XPATH, f"//*[contains(text(),'{entry_name}')]")
         assert existing_entry is not None, "Entry not found in register"
+
+    def confirm_can_view_entry(self, register, entry_name):
+        self._navigate_to_registers()
+        self._view_register(register)
+        self._view_entry(entry_name)
