@@ -14,7 +14,7 @@ typical CRUD pattern:
 
 from uuid import UUID
 
-from flask import flash, redirect, url_for, render_template
+from flask import flash, redirect, render_template, url_for
 from werkzeug import Response
 
 from app import db

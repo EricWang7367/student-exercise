@@ -32,7 +32,6 @@ from app.models import Register
 from app.register import bp
 from app.register.forms import RegisterDeleteForm, RegisterForm
 
-
 # --- ROUTES FOR REGISTER CRUD OPERATIONS ---
 #
 # These routes form the "Register" section of the app.
