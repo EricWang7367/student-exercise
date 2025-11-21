@@ -91,7 +91,7 @@ class Entry(Model):
         Primary key for the Entry. Automatically generated using uuid4.
     name : str
         A human-readable name for the entry.
-        Must be unique and cannot be null. Indexed for faster lookups.
+        Must be unique for a given register and cannot be null. Indexed for faster lookups.
     """
 
     # Primary key column using UUID
@@ -101,10 +101,10 @@ class Entry(Model):
         default=uuid.uuid4,  # Auto-generate a UUID
     )
 
-    # Name column for the register
+    # Name column for the entry
     name: Mapped[str] = mapped_column(
         nullable=False,  # Cannot be empty
-        unique=True,  # Each register name must be unique
+        unique=False,  # Entry names are not globally unique, but should be unique on a given register
         index=True,  # Database index for faster search
     )
 

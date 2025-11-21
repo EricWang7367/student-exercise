@@ -78,3 +78,10 @@ class FunctionalTests(TestCase):
         self.dsl.ensure_existing_register()
         self.dsl.add_entry_to_register()
         self.dsl.confirm_entry_added()
+
+    def test_entry_with_same_name_allowed_in_different_registers(self):
+        self.dsl.ensure_existing_register("Register A")
+        self.dsl.ensure_existing_register("Register B")
+        self.dsl.ensure_existing_entry(register="Register A", entry_name="Entry 1")
+        self.dsl.add_entry_to_register(register="Register B", entry_name="Entry 1")
+        self.dsl.confirm_entry_added(register="Register B", entry_name="Entry 1")
