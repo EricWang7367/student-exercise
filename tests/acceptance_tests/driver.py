@@ -57,7 +57,7 @@ class Driver:
         name_field = self.browser.find_element(By.NAME, "name")
         name_field.send_keys(name)
 
-        self.browser.find_element(By.NAME, "submit").click()
+        self._find_and_click(By.NAME, "submit")
 
     def confirm_name_required_validation_error(self):
         self._confirm_page_has_errors()
@@ -99,7 +99,7 @@ class Driver:
         name_field.clear()
         name_field.send_keys(new_name)
 
-        self.browser.find_element(By.NAME, "submit").click()
+        self._find_and_click(By.NAME, "submit")
 
     def confirm_register_updated(self, old_name, new_name):
         updated_message = self.browser.find_element(By.XPATH, "//*[contains(text(),'Successfully updated register')]")
@@ -136,7 +136,7 @@ class Driver:
         confirm_checkbox = self.browser.find_element(By.NAME, "confirm")
         confirm_checkbox.click()
 
-        self.browser.find_element(By.NAME, "submit").click()
+        self._find_and_click(By.NAME, "submit")
 
     def confirm_register_deleted(self, name):
         deleted_message = self.browser.find_element(By.XPATH, "//*[contains(text(),'Successfully deleted register')]")
@@ -162,7 +162,7 @@ class Driver:
         name_field = self.browser.find_element(By.NAME, "name")
         name_field.send_keys(entry_name)
 
-        self.browser.find_element(By.NAME, "submit").click()
+        self._find_and_click(By.NAME, "submit")
 
     def confirm_entry_added(self, register, entry_name):
         added_message = self.browser.find_element(
