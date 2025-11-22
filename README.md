@@ -65,10 +65,6 @@ Built to feel frictionless for rapid iteration, testing and deployment.
 Create a `.env` file in the root of the repo and enter your specific config based on this example:
 
 ```dotenv
-CONTACT_EMAIL=[contact email]
-CONTACT_PHONE=[contact phone]
-DEPARTMENT_NAME=[name of department]
-DEPARTMENT_URL=[url of department]
 POSTGRES_DB=db
 POSTGRES_HOST=db
 POSTGRES_PASSWORD=db_password
@@ -77,8 +73,6 @@ POSTGRES_USER=db_user
 REDIS_HOST=cache
 REDIS_PORT=6379
 SECRET_KEY=[see below]
-SERVICE_NAME=[name of service]
-SERVICE_PHASE=[phase]
 SERVICE_URL=[url of service]
 ```
 

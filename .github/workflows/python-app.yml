@@ -16,10 +16,6 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     env:
-      CONTACT_EMAIL: test@example.com
-      CONTACT_PHONE: 0123456789
-      DEPARTMENT_NAME: "HM Land Registry"
-      DEPARTMENT_URL: https://www.gov.uk/government/organisations/land-registry
       POSTGRES_DB: db
       POSTGRES_HOST: db
       POSTGRES_PASSWORD: ${{ secrets.PG_PASS }}
@@ -28,8 +24,6 @@ jobs:
       REDIS_HOST: cache
       REDIS_PORT: 6379
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
-      SERVICE_NAME: "Student exercise"
-      SERVICE_PHASE: Beta
       SERVICE_URL: http://localhost
 
     steps:
