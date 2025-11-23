@@ -1,5 +1,7 @@
 # Exercise 2: Running the tests
 
+ensuring that your development environment is set up and working as expected, 
+and to prove the end-to-end development process we will be following throughout subsequent exercises
 
 ## Running the tests locally
 
@@ -24,6 +26,24 @@
    ```
 4. Confirm that the tests all pass.
 5. Visit the application in a browser (https://localhost) and observe that the data created by the tests is still present.
+
+## Clearing the local database
+
+Whilst being able to view the data created by the tests is useful, the database can fill up very quickly if you're running
+the tests multiple times.  A simple script is provided in the root of the project that can be used to truncate the database,
+execute it by running the following command from the root of the project (where `<username>` and `<password>` are the database
+username and password you set in your .env file:
+```shell
+python empty_db.py -u <username> -p <password>
+```
+**IMPORTANT NOTE:** executing this script will delete _all_ the rows in the associated database tables, and you won't be able to get them back!
+
+
+## Breaking the tests
+
+Now that we've proved the tests are passing, let's try breaking them.  The value of a good test suite is that it can help
+defend against regressions in the expected behaviour (functionality).
+
 
 
 ## Configure the GitHub workflow to run tests

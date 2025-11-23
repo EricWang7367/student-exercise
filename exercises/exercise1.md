@@ -4,8 +4,7 @@ A [walking skeleton](https://wiki.c2.com/?WalkingSkeleton) is just enough implem
 function.  It links together the key architectural components of a system and provides a base upon which the system and 
 it's architecture can evolve.
 For this project, the walking skeleton is a partially implemented web application for creating and managing registers
-of things.  This first exercise is about ensuring that your development environment is set up and working as expected, 
-and to prove the end-to-end development process we will be following throughout subsequent exercises.
+of things.  This first exercise is about getting you set up and ensuring you can run the project locally.
 
 
 ## Prerequisites
