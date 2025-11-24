@@ -24,6 +24,9 @@ and to prove the end-to-end development process we will be following throughout 
    ```shell
    docker compose watch
    ```
+   NOTE: we are using `watch` instead of `up` (as we did previously) which will allow the running container to hot reload
+   the app as changes are made so you don't have to keep stopping and restarting.
+
 3. Run the following command (you'll have to open a new terminal/shell) to execute the project's functional acceptance tests: 
    ```shell
    python -m pytest tests/acceptance_tests/
@@ -65,7 +68,7 @@ nothing is broken.
 2. In a browser, log in to GitHub and find your fork repository.
 3. Under the "Actions" tab, enable actions
 4. Go to the repository's Settings, then "Secrets & variables" -> "Actions"
-5. Under "Settings" -> "Secrets and Variables" -> "Actions" -> "Repository secrets" add the following secrets:
+5. Under "Repository secrets" add the following secrets:
    1. `PG_USER`: a username for the database user to be created/used by the GitHub workflow (e.g. `db_user`)
    2. `PG_PASS`: a password for the database user (e.g. `db_password`)
    3. `SECRET_KEY`: repeat the step in exercise (under "Running the project") to generate a secret key and copy/paste the result
