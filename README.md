@@ -1,8 +1,12 @@
-![Static Badge](https://img.shields.io/badge/GOV.UK%20Frontend-v5.13.0-blue)
+# Student exercise
 
-# GOV.UK Frontend - Flask App Template
+## Exercises
 
-Start building **accessible**, **secure**, **production-ready** and **maintainable** GOV.UK-style services, fast.
+1. [Walking skeleton](./exercises/exercise1.md)
+2. [Running the tests](./exercises/exercise2.md)
+3. [Finish implementation of entries](./exercises/exercise3.md)
+4. [Mini hackathon](./exercises/exercise4.md)
+
 
 A [Flask](https://flask.palletsprojects.com) application integrating the [GOV.UK Design System](https://design-system.service.gov.uk/) with a realistic, containerised stack.
 
@@ -14,7 +18,7 @@ A [Flask](https://flask.palletsprojects.com) application integrating the [GOV.UK
 - **Secure Flask foundation** – HTTPS, CSRF, CSP, rate limits, [SQLAlchemy](https://www.sqlalchemy.org/) and migrations ready to go.
 - **Containerised by default** – [Nginx](https://nginx.org/en/) , [PostgreSQL](https://www.postgresql.org/), [Redis](https://redis.io/) and [Node](https://nodejs.org/en) pipeline managed via [Docker Compose](https://docs.docker.com/compose/).
 - **Fast, lean builds** – Multi-stage Dockerfiles, wheel caching, non-root runtime, and CI via [GitHub Actions](https://github.com/features/actions).
-- **Compliance-ready pages** – 404/500 errors, cookie banner, accessibility statement and privacy notice included.
+- **Compliance-ready pages** – 404/500 errors, cookie banner, accessibility statement included.
 - **Developer-first setup** – Example blueprints, templates, macros, and GOV.UK-style flash messages for instant feedback.
 
 ## Security
@@ -54,57 +58,6 @@ Built to feel frictionless for rapid iteration, testing and deployment.
 
 - Docker (Engine & Compose)
 
-## Quick start
-
-### 1. Create a new repository
-
-[Create a new repository](https://github.com/LandRegistry/govuk-frontend-flask/generate) using this template, with the same directory structure and files. Then clone a local copy of your newly created repository.
-
-### 2. Configure environment
-
-Create a `.env` file in the root of the repo and enter your specific config based on this example:
-
-```dotenv
-POSTGRES_DB=db
-POSTGRES_HOST=db
-POSTGRES_PASSWORD=db_password
-POSTGRES_PORT=5432
-POSTGRES_USER=db_user
-REDIS_HOST=cache
-REDIS_PORT=6379
-SECRET_KEY=[see below]
-SERVICE_URL=[url of service]
-```
-
-You **must** set a new `SECRET_KEY`, which is used to securely sign the session cookie and CSRF tokens. It should be a long random `bytes` or `str`. You can use the output of this Python command to generate a new key:
-
-```shell
-python -c 'import secrets; print(secrets.token_hex())'
-```
-
-### 3. Start the stack
-
-```shell
-docker compose up --build
-```
-
-Visit <https://localhost/> and accept the browser’s security warning.
-
-Hot reloading is supported via:
-
-```shell
-docker compose watch
-```
-
-> **Note**: `docker compose watch` requires Docker Compose v2.22 or newer.
-
-## Testing
-
-Run unit tests and measure coverage locally:
-
-```shell
-python -m pytest --cov=app --cov-report=term-missing --cov-branch
-```
 
 ## Environment
 
