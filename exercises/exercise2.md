@@ -22,14 +22,14 @@ and to prove the end-to-end development process we will be following throughout 
    This step should only need to be done once and can be skipped on subsequent running of the tests.
 2. Start the containers:
    ```shell
-   docker compose up
+   docker compose watch
    ```
 3. Run the following command (you'll have to open a new terminal/shell) to execute the project's functional acceptance tests: 
    ```shell
    python -m pytest tests/acceptance_tests/
    ```
 4. Confirm that the tests all pass.
-5. Visit the application in a browser (https://localhost) and observe that the data created by the tests is still present.
+5. Visit the application in a browser (https://localhost/registers/) and observe that the data created by the tests is still present.
 
 
 ## Clearing the local database
@@ -39,7 +39,7 @@ the tests multiple times.  A simple script is provided in the root of the projec
 execute it by running the following command from the root of the project (where `<username>` and `<password>` are the database
 username and password you set in your .env file:
 ```shell
-python empty_db.py -u <username> -p <password>
+python truncate_db.py -u <username> -p <password>
 ```
 **IMPORTANT NOTE:** executing this script will delete _all_ the rows in the associated database tables, and you won't be able to get them back!
 
@@ -65,7 +65,7 @@ nothing is broken.
 2. In a browser, log in to GitHub and find your fork repository.
 3. Under the "Actions" tab, enable actions
 4. Go to the repository's Settings, then "Secrets & variables" -> "Actions"
-5. Under "Repository secrets" add the following secrets:
+5. Under "Settings" -> "Secrets and Variables" -> "Actions" -> "Repository secrets" add the following secrets:
    1. `PG_USER`: a username for the database user to be created/used by the GitHub workflow (e.g. `db_user`)
    2. `PG_PASS`: a password for the database user (e.g. `db_password`)
    3. `SECRET_KEY`: repeat the step in exercise (under "Running the project") to generate a secret key and copy/paste the result
