@@ -8,6 +8,9 @@ and to prove the end-to-end development process we will be following throughout 
 
 1. Install the project's Python dependencies by running the following commands from the root of the repository:
    ```shell
+   pyenv install
+   ```
+   ```shell
    python -m pip install --upgrade pip
    ```
    ```shell
