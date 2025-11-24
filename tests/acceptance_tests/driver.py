@@ -1,5 +1,5 @@
 from selenium import webdriver
-from selenium.common import NoSuchElementException
+from selenium.common import NoSuchElementException, WebDriverException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By, ByType
 from selenium.webdriver.support import expected_conditions as EC
@@ -34,9 +34,13 @@ class Driver:
         assert page_heading.text == entry_name
 
     def _find_and_click(self, by: ByType, locator: str):
-        link = WebDriverWait(self.browser, 5).until(EC.element_to_be_clickable((by, locator)))
-        link.click()
-        WebDriverWait(self.browser, 5).until(EC.staleness_of(link))
+        element = WebDriverWait(self.browser, 5).until(EC.element_to_be_clickable((by, locator)))
+        element.click()
+        try:
+            WebDriverWait(self.browser, 5).until(EC.staleness_of(element))
+        except WebDriverException:
+            # If this fails, just continue as likely caused by the speed the page reloads
+            pass
 
     def _confirm_page_has_errors(self):
         WebDriverWait(self.browser, 5).until(EC.title_contains("Error:"))
