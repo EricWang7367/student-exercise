@@ -10,7 +10,7 @@ class Driver:
 
     def __init__(self, base_url):
         options = Options()
-        options.add_argument("--headless")
+        #options.add_argument("--headless")
         options.add_argument("--ignore-certificate-errors")
         self.browser = webdriver.Chrome(options=options)
         self.base_url = base_url
