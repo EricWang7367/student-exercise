@@ -90,3 +90,36 @@ class FunctionalTests(TestCase):
         self.dsl.ensure_existing_register()
         self.dsl.ensure_existing_entry()
         self.dsl.confirm_can_view_entry()
+
+
+
+
+
+
+
+
+#mine
+    def test_edit_entry_name_required(self):
+        self.dsl.ensure_existing_register()
+        self.dsl.ensure_existing_entry(entry_name="TOM")
+        self.dsl.update_existing_entry(new_name="")
+        self.dsl.confirm_name_required_validation_error()
+
+    def test_edit_entry_must_be_unique(self):
+        self.dsl.ensure_existing_register()
+        self.dsl.ensure_existing_entry(entry_name="Entry A")
+        self.dsl.ensure_existing_entry(entry_name="Entry B")
+        self.dsl.update_existing_entry(current_name="Entry B", new_name="Entry A")
+        self.dsl.confirm_name_already_exists_validation_error()            #checks if theres any error 
+
+    def test_can_edit_entry(self):
+        self.dsl.ensure_existing_register()
+        self.dsl.ensure_existing_entry(entry_name= "Old Entry")
+        self.dsl.update_existing_entry(current_name="Old Entry", new_name="New Entry")
+        self.dsl.confirm_entry_updated(old_name="Old Entry", new_name="New Entry")
+
+    def test_can_view_updated_entry(self):
+        self.dsl.ensure_existing_register()
+        self.dsl.ensure_existing_entry(entry_name="Original")
+        self.dsl.update_existing_entry(current_name="Original", new_name="Updated")
+        self.dsl.confirm_can_view_entry(entry_name="Updated")
