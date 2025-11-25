@@ -1,4 +1,4 @@
-#hero 
+#hello
 # Student exercise
 
 ## Exercises
