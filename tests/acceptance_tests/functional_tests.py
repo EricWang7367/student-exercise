@@ -92,17 +92,7 @@ class FunctionalTests(TestCase):
         self.dsl.confirm_can_view_entry()
 
 
-
-
-
-<<<<<<< HEAD
     #mine
-=======
-
-
-
-#mine
->>>>>>> bdae8100bb20871f9a3a5f51bffca94c3e80a12c
     def test_edit_entry_name_required(self):
         self.dsl.ensure_existing_register()
         self.dsl.ensure_existing_entry(entry_name="TOM")
@@ -127,16 +117,4 @@ class FunctionalTests(TestCase):
         self.dsl.ensure_existing_entry(entry_name="Original")
         self.dsl.update_existing_entry(current_name="Original", new_name="Updated")
         self.dsl.confirm_can_view_entry(entry_name="Updated")
-<<<<<<< HEAD
 
-    
-    
-    
-    
-    
-    
-    
-  
-
-=======
->>>>>>> bdae8100bb20871f9a3a5f51bffca94c3e80a12c
