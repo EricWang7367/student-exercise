@@ -229,16 +229,12 @@ class Driver:
         assert new_entry is not None, "entry with new name not found"
 
     # delete
-    def delete_existing_entry(self,register, name):
+    def delete_existing_entry(self, register, name):
         self._navigate_to_registers()
         self._view_register(register)
         self._view_entry(name)
 
         self._find_and_click(By.LINK_TEXT, "Delete entry")
-
-        
-
-
 
     def confirm_deletion_requires_confirmation_entry(self, name):
         confirmation_prompt = self.browser.find_element(
@@ -260,7 +256,6 @@ class Driver:
             raise AssertionError("Deleted entry still exists")
         except NoSuchElementException:
             pass
-
 
     def cancel_entry_deletion(self, alias):
         self._find_and_click(By.LINK_TEXT, "Cancel")

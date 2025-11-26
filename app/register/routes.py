@@ -156,7 +156,7 @@ def edit(register_id: UUID) -> str | Response:
 
 @bp.route("/<uuid:register_id>/delete", methods=["GET", "POST"])
 def delete(register_id: UUID) -> str | Response:
-    
+
     # Load the register to delete or return 404 if not found
     register = db.get_or_404(Register, register_id)
 

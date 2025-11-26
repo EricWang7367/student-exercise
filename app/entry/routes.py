@@ -24,8 +24,6 @@ from app.models import Entry
 from app.entry.forms import EntryDeleteForm
 
 
-
-
 @bp.route("/add", methods=["GET", "POST"])
 def add(register_id: UUID) -> str | Response:
     form = EntryForm(register_id=register_id)
@@ -64,9 +62,10 @@ def view(register_id: UUID, entry_id: UUID) -> str:
     # Render the detail page for this register
     return render_template("entry/view.html", entry=entry)
 
+
 @bp.route("/<uuid:entry_id>/edit", methods=["GET", "POST"])
 def edit(register_id: UUID, entry_id: UUID) -> str | Response:
-    
+
     # Load the register or show 404 if it doesn't exist
     entry = db.one_or_404(db.select(Entry).filter_by(register_id=register_id, id=entry_id))
     form = EntryForm(register_id=register_id)
@@ -88,13 +87,9 @@ def edit(register_id: UUID, entry_id: UUID) -> str | Response:
     return render_template("entry/edit.html", entry=entry, form=form)
 
 
-
-
-
-
 @bp.route("/<uuid:entry_id>/delete", methods=["GET", "POST"])
-def delete(register_id: UUID,entry_id: UUID) -> str | Response:
-    
+def delete(register_id: UUID, entry_id: UUID) -> str | Response:
+
     # Load the entry to delete or return 404 if not found
     entry = db.one_or_404(db.select(Entry).filter_by(register_id=register_id, id=entry_id))
     form = EntryDeleteForm(entry_id=entry_id)
@@ -105,7 +100,7 @@ def delete(register_id: UUID,entry_id: UUID) -> str | Response:
         db.session.commit()
 
         flash("Successfully deleted entry", "success")
-        return redirect(url_for("register.view",register_id=register_id))
+        return redirect(url_for("register.view", register_id=register_id))
 
     # Render the confirmation page if GET request or validation fails
     return render_template("entry/delete.html", entry=entry, form=form)
