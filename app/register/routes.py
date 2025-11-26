@@ -156,20 +156,7 @@ def edit(register_id: UUID) -> str | Response:
 
 @bp.route("/<uuid:register_id>/delete", methods=["GET", "POST"])
 def delete(register_id: UUID) -> str | Response:
-    """
-    Delete an existing Register.
-
-    HTTP Methods:
-    - GET: Show a confirmation page to avoid accidental deletion
-    - POST: Delete the register if confirmation is given
-
-    Parameters:
-    - register_id (UUID): The unique identifier of the Register to delete
-
-    Returns:
-    - str: Rendered confirmation page if GET or validation fails
-    - Response: Redirect to index on successful deletion
-    """
+    
     # Load the register to delete or return 404 if not found
     register = db.get_or_404(Register, register_id)
 

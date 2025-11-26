@@ -212,11 +212,12 @@ class Driver:
 
         self._find_and_click(By.NAME, "submit")
 
-    def confirm_entry_updated(self, old_name, new_name):
+    def confirm_entry_updated(self, register, old_name, new_name):
         updated_message = self.browser.find_element(By.XPATH, "//*[contains(text(),'Successfully updated entry')]")
         assert updated_message is not None, "Updated message not found"
 
         self._navigate_to_registers()
+        self._view_register(register)
 
         try:
             self.browser.find_element(By.XPATH, f"//*[contains(text(), '{old_name}')]")
@@ -228,9 +229,16 @@ class Driver:
         assert new_entry is not None, "entry with new name not found"
 
     # delete
-    def delete_existing_entry(self, name):
-        self._navigate_to_entry()
+    def delete_existing_entry(self,register, name):
+        self._navigate_to_registers()
+        self._view_register(register)
         self._view_entry(name)
+
+        self._find_and_click(By.LINK_TEXT, "Delete entry")
+
+        
+
+
 
     def confirm_deletion_requires_confirmation_entry(self, name):
         confirmation_prompt = self.browser.find_element(
@@ -243,17 +251,16 @@ class Driver:
         confirm_checkbox = self.browser.find_element(By.NAME, "confirm")
         confirm_checkbox.click()
 
-    def confirm_entry_deleted(self, alias):
-        deleted_message = self.browser.find_element(By.XPATH, "//*[contains(text(),'Successfully deleted entry')]")
-        assert deleted_message is not None, "Deleted message not found"
-
-        self._navigate_to_entry()
+    def confirm_entry_deleted(self, register, entry_name):
+        self._navigate_to_registers()
+        self._view_register(register)
 
         try:
-            self.browser.find_element(By.XPATH, f"//*[contains(text(), '{alias}')]")
+            self.browser.find_element(By.XPATH, f"//*[contains(text(), '{entry_name}')]")
             raise AssertionError("Deleted entry still exists")
         except NoSuchElementException:
             pass
+
 
     def cancel_entry_deletion(self, alias):
         self._find_and_click(By.LINK_TEXT, "Cancel")
