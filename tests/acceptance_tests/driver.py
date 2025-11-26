@@ -250,7 +250,7 @@ class Driver:
         self._navigate_to_entry()
 
         try:
-            self.browser.find_element(By.XPATH, f"//*[contains(text(), '{name}')]")
+            self.browser.find_element(By.XPATH, f"//*[contains(text(), '{alias}')]")
             raise AssertionError("Deleted entry still exists")
         except NoSuchElementException:
             pass
