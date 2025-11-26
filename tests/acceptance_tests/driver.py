@@ -257,5 +257,3 @@ class Driver:
 
     def cancel_entry_deletion(self, alias):
         self._find_and_click(By.LINK_TEXT, "Cancel")
-
-    
