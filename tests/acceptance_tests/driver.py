@@ -193,3 +193,41 @@ class Driver:
         self._navigate_to_registers()
         self._view_register(register)
         self._view_entry(entry_name)
+
+
+
+
+    #mine
+    def update_existing_entry(self,register,entry_name,new_name):
+        self._navigate_to_registers()
+        self._view_register(register)
+        self._view_entry(entry_name)
+
+        self._find_and_click(By.LINK_TEXT,"Edit entry")
+
+        name_field = self.browser.find_element(By.NAME, "name")
+        assert name_field.get_attribute("value") == entry_name
+
+        name_field.clear()
+        name_field.send_keys(new_name)
+        
+        self._find_and_click(By.NAME, "submit")
+
+
+    def confirm_entry_updated(self,old_name, new_name):
+        updated_message = self.browser.find_element(By.XPATH, "//*[contains(text(),'Successfully updated entry')]")
+        assert updated_message is not None, "Updated message not found"
+
+        self._navigate_to_registers()
+
+        try:
+            self.browser.find_element(By.XPATH, f"//*[contains(text(), '{old_name}')]")
+            raise AssertionError("Entry with old name still exists")
+        except NoSuchElementException:
+            pass
+
+        new_entry = self.browser.find_element(By.XPATH, f"//*[contains(text(), '{new_name}')]")
+        assert new_entry is not None, "entry with new name not found"
+        
+
+    
