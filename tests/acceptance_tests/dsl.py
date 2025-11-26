@@ -116,9 +116,12 @@ class Dsl:
         old_alias = self._decode_alias(old_name)
         new_alias = self._decode_alias(new_name)
         self.driver.confirm_entry_updated(old_alias,new_alias)
+<<<<<<< HEAD
 
     
 
     
     
     
+=======
+>>>>>>> bdae8100bb20871f9a3a5f51bffca94c3e80a12c

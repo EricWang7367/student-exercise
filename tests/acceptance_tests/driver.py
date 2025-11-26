@@ -229,5 +229,9 @@ class Driver:
         new_entry = self.browser.find_element(By.XPATH, f"//*[contains(text(), '{new_name}')]")
         assert new_entry is not None, "entry with new name not found"
         
+<<<<<<< HEAD
 
     
+=======
+        
+>>>>>>> bdae8100bb20871f9a3a5f51bffca94c3e80a12c
