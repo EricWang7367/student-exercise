@@ -91,8 +91,9 @@ class FunctionalTests(TestCase):
         self.dsl.ensure_existing_entry()
         self.dsl.confirm_can_view_entry()
 
+    # mine
 
-    #mine
+    # update
     def test_edit_entry_name_required(self):
         self.dsl.ensure_existing_register()
         self.dsl.ensure_existing_entry(entry_name="TOM")
@@ -104,11 +105,11 @@ class FunctionalTests(TestCase):
         self.dsl.ensure_existing_entry(entry_name="Entry A")
         self.dsl.ensure_existing_entry(entry_name="Entry B")
         self.dsl.update_existing_entry(current_name="Entry B", new_name="Entry A")
-        self.dsl.confirm_name_already_exists_validation_error()            #checks if theres any error 
+        self.dsl.confirm_name_already_exists_validation_error()  # checks if theres any error
 
     def test_can_edit_entry(self):
         self.dsl.ensure_existing_register()
-        self.dsl.ensure_existing_entry(entry_name= "Old Entry")
+        self.dsl.ensure_existing_entry(entry_name="Old Entry")
         self.dsl.update_existing_entry(current_name="Old Entry", new_name="New Entry")
         self.dsl.confirm_entry_updated(old_name="Old Entry", new_name="New Entry")
 
@@ -118,3 +119,20 @@ class FunctionalTests(TestCase):
         self.dsl.update_existing_entry(current_name="Original", new_name="Updated")
         self.dsl.confirm_can_view_entry(entry_name="Updated")
 
+    # delete
+    def test_can_delete_entry(self):
+        self.dsl.ensure_existing_register()
+        self.dsl.ensure_existing_entry()
+        self.dsl.delete_existing_entry()
+        self.dsl.confirm_deletion_requires_confirmation_entry()
+        self.dsl.confirm_entry_deletion()
+        self.dsl.confirm_entry_deleted()
+
+    def test_can_cancel_delete_entry(self):
+        self.dsl.ensure_existing_register()
+        self.dsl.ensure_existing_entry()
+        self.dsl.delete_existing_entry()
+        self.dsl.confirm_deletion_requires_confirmation_entry()
+        self.dsl.cancel_entry_deletion()
+        self.dsl.confirm_register_exists()
+        self.dsl.confirm_entry_exists()

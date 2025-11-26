@@ -104,17 +104,41 @@ class Dsl:
             register=self._encode_alias(register), entry_name=self._encode_alias(entry_name)
         )
 
+    # mine
 
-
-    #mine
-    def update_existing_entry(self,register=DEFAULT_REGISTER_NAME,current_name=DEFAULT_ENTRY_NAME,new_name=""):
+    # update
+    def update_existing_entry(self, register=DEFAULT_REGISTER_NAME, current_name=DEFAULT_ENTRY_NAME, new_name=""):
         reg_alias = self._encode_alias(register)
         current_alias = self._encode_alias(current_name)
         new_alias = self._encode_alias(new_name)
-        self.driver.update_existing_entry(reg_alias,current_alias,new_alias)
+        self.driver.update_existing_entry(reg_alias, current_alias, new_alias)
 
-    def confirm_entry_updated(self,old_name=DEFAULT_ENTRY_NAME, new_name=""):
+    def confirm_entry_updated(self, old_name=DEFAULT_ENTRY_NAME, new_name=""):
         old_alias = self._decode_alias(old_name)
         new_alias = self._decode_alias(new_name)
-        self.driver.confirm_entry_updated(old_alias,new_alias)
+        self.driver.confirm_entry_updated(old_alias, new_alias)
 
+    # delete
+    def delete_existing_entry(self, name=DEFAULT_ENTRY_NAME):
+        alias = self._encode_alias(name)
+        self.driver.delete_existing_entry(alias)
+
+    def confirm_deletion_requires_confirmation_entry(self, name=DEFAULT_ENTRY_NAME):
+        alias = self._decode_alias(name)
+        self.driver.confirm_deletion_requires_confirmation_entry(alias)
+
+    def confirm_entry_deletion(self, name=DEFAULT_ENTRY_NAME):
+        alias = self._decode_alias(name)
+        self.driver.confirm_entry_deletion(alias)
+
+    def confirm_entry_deleted(self, name=DEFAULT_ENTRY_NAME):
+        alias = self._decode_alias(name)
+        self.driver.confirm_entry_deleted(alias)
+
+    def cancel_entry_deletion(self, name=DEFAULT_ENTRY_NAME):
+        alias = self._decode_alias(name)
+        self.driver.cancel_entry_deletion(alias)
+
+    def confirm_entry_exists(self, name=DEFAULT_ENTRY_NAME):
+        alias = self._decode_alias(name)
+        self.driver.confirm_entry_exists(alias)
