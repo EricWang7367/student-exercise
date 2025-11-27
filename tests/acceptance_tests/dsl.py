@@ -159,3 +159,5 @@ class Dsl:
         reg_alias = self._decode_alias(register)
         alias = self._decode_alias(entry_name)
         self.driver.confirm_not_deleted(register=reg_alias, name=alias)
+
+#new comment
