@@ -262,6 +262,19 @@ class Driver:
 
         try:
             self.browser.find_element(By.XPATH, f"//*[contains(text(),'{name}')]")
-            raise AssertionError("Deleted register still exists")
+            raise AssertionError("Deleted entry still exists")
+        except NoSuchElementException:
+            pass
+
+    def confirm_not_deleted(self, register, name):
+        deleted_message = self.browser.find_element(By.XPATH, "//*[contains(text(),'Entry is not Empty')]")
+        assert deleted_message is not None, "Deleted message not found"
+
+        self._navigate_to_registers()
+        self._view_register(register)
+
+        try:
+            self.browser.find_element(By.XPATH, f"//*[contains(text(),'Successfully deleted register')]")
+            raise AssertionError("Deleted")
         except NoSuchElementException:
             pass

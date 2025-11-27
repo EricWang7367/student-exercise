@@ -154,3 +154,8 @@ class Dsl:
         reg_alias = self._decode_alias(reg)
         alias = self._decode_alias(name)
         self.driver.confirm_entry_exists(reg_alias, alias)
+
+    def confirm_not_deleted(self, register=DEFAULT_REGISTER_NAME, entry_name=DEFAULT_ENTRY_NAME):
+        reg_alias = self._decode_alias(register)
+        alias = self._decode_alias(entry_name)
+        self.driver.confirm_not_deleted(register=reg_alias, name=alias)

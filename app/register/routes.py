@@ -163,12 +163,17 @@ def delete(register_id: UUID) -> str | Response:
     form = RegisterDeleteForm()
 
     if form.validate_on_submit():
-        # Remove the register from the database
-        db.session.delete(register)
-        db.session.commit()
 
-        flash("Successfully deleted register", "success")
-        return redirect(url_for("register.index"))
+        if register.entries:
+            flash("Entry is not Empty", "fail")
+            return redirect(url_for("register.view", register_id=register_id))
+
+        else:
+            db.session.delete(register)
+            db.session.commit()
+
+            flash("Successfully deleted register", "success")
+            return redirect(url_for("register.index"))
 
     # Render the confirmation page if GET request or validation fails
     return render_template("register/delete.html", register=register, form=form)
