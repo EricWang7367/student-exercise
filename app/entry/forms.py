@@ -12,14 +12,10 @@ design system used in the application.
 """
 
 from flask_wtf import FlaskForm
-from govuk_frontend_wtf.wtforms_widgets import (
-    GovCheckboxInput,
-    GovSubmitInput,
-    GovTextInput,
-)
+from govuk_frontend_wtf.wtforms_widgets import GovCheckboxInput, GovSelect, GovSubmitInput, GovTextInput
 from wtforms import BooleanField
-from wtforms.fields import StringField, SubmitField
-from wtforms.validators import InputRequired, ValidationError
+from wtforms.fields import SelectField, StringField, SubmitField
+from wtforms.validators import InputRequired, Optional, ValidationError
 
 from app.models import Entry
 
@@ -51,6 +47,20 @@ class EntryForm(FlaskForm):
         "Name",
         widget=GovTextInput(),
         validators=[InputRequired(message="Enter a name")],
+    )
+
+    property_type = SelectField(
+        "Property Type",
+        choices=[
+            ("n", "None"),
+            ("sd", "Semi-Detached"),
+            ("d", "Detached"),
+            ("t", "Terraced"),
+            ("b", "Bungalow"),
+            ("f", "Flat"),
+        ],
+        widget=GovSelect(),
+        validators=[Optional()],
     )
 
     # A standard GOV.UK-styled submit button.

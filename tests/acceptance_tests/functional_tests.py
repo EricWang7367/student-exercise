@@ -145,3 +145,9 @@ class FunctionalTests(TestCase):
         self.dsl.confirm_deletion_requires_confirmation()
         self.dsl.confirm_register_deletion()
         self.dsl.confirm_not_deleted()  # creates
+
+    def test_can_add_property_type(self):
+        self.dsl.ensure_existing_register()
+        self.dsl.add_property_type()
+        self.dsl.confirm_entry_added()
+        self.dsl.ensure_property_type_added(property_type="Semi-Detached")

@@ -8,6 +8,7 @@ class Dsl:
 
     DEFAULT_REGISTER_NAME = "Register of Things"
     DEFAULT_ENTRY_NAME = "An entry"
+    DEFAULT_PROPERTY_TYPE = "Semi-Detached"
 
     def __init__(self, driver: Driver):
         self.driver = driver
@@ -160,4 +161,16 @@ class Dsl:
         alias = self._decode_alias(entry_name)
         self.driver.confirm_not_deleted(register=reg_alias, name=alias)
 
-#new comment
+    def add_property_type(
+        self, register=DEFAULT_REGISTER_NAME, entry=DEFAULT_ENTRY_NAME, property_type=DEFAULT_PROPERTY_TYPE
+    ):
+        reg_alias = self._decode_alias(register)
+        entry_alias = self._encode_alias(entry)
+        self.driver.add_property_type(register=reg_alias, entry=entry_alias, property_type=property_type)
+
+    def ensure_property_type_added(
+        self, register=DEFAULT_REGISTER_NAME, entry=DEFAULT_ENTRY_NAME, property_type=DEFAULT_PROPERTY_TYPE
+    ):
+        reg_alias = self._decode_alias(register)
+        alias = self._decode_alias(entry)
+        self.driver.ensure_property_type_added(reg_alias, alias, property_type)

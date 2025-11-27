@@ -30,6 +30,23 @@
         'href': url_for('register.entry.delete', register_id=entry.register_id,entry_id=entry.id)
       }) }}
     </div>
+    <span class="govuk-caption-l">Property Type</span>
+ 
+    {% if entry.property_type == "n" %}
+      <h1 class="govuk-heading-l">None</h1>
+    {% elif entry.property_type == "sd" %}
+      <h1 class="govuk-heading-l">Semi-Detached</h1>
+    {% elif entry.property_type == "d" %}
+      <h1 class="govuk-heading-l">Detached</h1>
+    {% elif entry.property_type == "t" %} 
+      <h1 class="govuk-heading-l">Terraced</h1>
+    {% elif entry.property_type == "b" %}
+      <h1 class="govuk-heading-l">Bungalow</h1>
+    {% elif entry.property_type == "f" %}
+      <h1 class="govuk-heading-l">Flat</h1>
+    {%endif%}
+
   </div>
 </div>
 {%- endblock -%}
+

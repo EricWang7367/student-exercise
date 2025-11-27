@@ -30,7 +30,7 @@ def add(register_id: UUID) -> str | Response:
     # Flask-WTF handles form validation and CSRF protection for us.
     # We don't need to manually check request.form or HTML inputs.
     if form.validate_on_submit():
-        entry = Entry(name=form.name.data, register_id=register_id)
+        entry = Entry(name=form.name.data, register_id=register_id, property_type=form.property_type.data)
         db.session.add(entry)
         db.session.commit()
         flash("Successfully added entry to register", "success")

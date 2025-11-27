@@ -3,6 +3,7 @@ from selenium.common import NoSuchElementException, WebDriverException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By, ByType
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.wait import WebDriverWait
 
 
@@ -278,3 +279,30 @@ class Driver:
             raise AssertionError("Deleted")
         except NoSuchElementException:
             pass
+
+    def add_property_type(self, register, entry, property_type):
+        self._navigate_to_registers()
+        self._view_register(register)
+        self._find_and_click(By.LINK_TEXT, "Add new entry")
+
+        heading = self.browser.find_element(By.TAG_NAME, "h1")
+        assert heading.text == "Add new entry"
+
+        name_field = self.browser.find_element(By.NAME, "name")
+        name_field.send_keys(entry)
+
+        dropdown = Select(self.browser.find_element(By.NAME, "property_type"))
+        dropdown.select_by_visible_text(property_type)
+
+        self._find_and_click(By.NAME, "submit")
+
+    def ensure_property_type_added(self, register, entry, property_type):
+        self._navigate_to_registers()
+        self._view_register(register)
+        self._view_entry(entry)
+
+        heading = self.browser.find_element(By.TAG_NAME, "h1")
+        assert heading.text == entry
+
+        property_type = self.browser.find_element(By.XPATH, f"//*[contains(text(), '{property_type}')]")
+        assert property_type is not None, "property type not found"
