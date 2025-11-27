@@ -247,15 +247,21 @@ class Driver:
         confirm_checkbox = self.browser.find_element(By.NAME, "confirm")
         confirm_checkbox.click()
 
-    def confirm_entry_deleted(self, register, entry_name):
+        self._find_and_click(By.NAME, "submit")
+
+    def cancel_entry_deletion(self, alias):
+        self._find_and_click(By.LINK_TEXT, "Cancel")
+
+    def confirm_entry_deleted(self, register, name):
+
+        deleted_message = self.browser.find_element(By.XPATH, "//*[contains(text(),'Successfully deleted entry')]")
+        assert deleted_message is not None, "Deleted message not found"
+
         self._navigate_to_registers()
         self._view_register(register)
 
         try:
-            self.browser.find_element(By.XPATH, f"//*[contains(text(), '{entry_name}')]")
-            raise AssertionError("Deleted entry still exists")
+            self.browser.find_element(By.XPATH, f"//*[contains(text(),'{name}')]")
+            raise AssertionError("Deleted register still exists")
         except NoSuchElementException:
             pass
-
-    def cancel_entry_deletion(self, alias):
-        self._find_and_click(By.LINK_TEXT, "Cancel")

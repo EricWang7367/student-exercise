@@ -91,23 +91,31 @@ class Dsl:
 
     def add_entry_to_register(self, register=DEFAULT_REGISTER_NAME, entry_name=DEFAULT_ENTRY_NAME):
         self.driver.add_entry_to_register(
-            register=self._encode_alias(register), entry_name=self._encode_alias(entry_name)
+            register=self._encode_alias(register),
+            entry_name=self._encode_alias(entry_name),
         )
 
     def confirm_entry_added(self, register=DEFAULT_REGISTER_NAME, entry_name=DEFAULT_ENTRY_NAME):
         self.driver.confirm_entry_added(
-            register=self._decode_alias(register), entry_name=self._decode_alias(entry_name)
+            register=self._decode_alias(register),
+            entry_name=self._decode_alias(entry_name),
         )
 
     def confirm_can_view_entry(self, register=DEFAULT_REGISTER_NAME, entry_name=DEFAULT_ENTRY_NAME):
         self.driver.confirm_can_view_entry(
-            register=self._encode_alias(register), entry_name=self._encode_alias(entry_name)
+            register=self._encode_alias(register),
+            entry_name=self._encode_alias(entry_name),
         )
 
     # mine
 
     # update
-    def update_existing_entry(self, register=DEFAULT_REGISTER_NAME, current_name=DEFAULT_ENTRY_NAME, new_name=""):
+    def update_existing_entry(
+        self,
+        register=DEFAULT_REGISTER_NAME,
+        current_name=DEFAULT_ENTRY_NAME,
+        new_name="",
+    ):
         reg_alias = self._encode_alias(register)
         current_alias = self._encode_alias(current_name)
         new_alias = self._encode_alias(new_name)
@@ -134,9 +142,9 @@ class Dsl:
         self.driver.confirm_entry_deletion(alias)
 
     def confirm_entry_deleted(self, register=DEFAULT_REGISTER_NAME, entry_name=DEFAULT_ENTRY_NAME):
-        entry_name_alias = self._decode_alias(entry_name)
-        register_alias = self._decode_alias(register)
-        self.driver.confirm_entry_deleted(register_alias, entry_name_alias)
+        alias = self._decode_alias(entry_name)
+        reg_alias = self._decode_alias(register)
+        self.driver.confirm_entry_deleted(register=reg_alias, name=alias)
 
     def cancel_entry_deletion(self, name=DEFAULT_ENTRY_NAME):
         alias = self._decode_alias(name)

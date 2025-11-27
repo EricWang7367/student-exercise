@@ -12,7 +12,11 @@ design system used in the application.
 """
 
 from flask_wtf import FlaskForm
-from govuk_frontend_wtf.wtforms_widgets import GovSubmitInput, GovTextInput, GovCheckboxInput
+from govuk_frontend_wtf.wtforms_widgets import (
+    GovCheckboxInput,
+    GovSubmitInput,
+    GovTextInput,
+)
 from wtforms import BooleanField
 from wtforms.fields import StringField, SubmitField
 from wtforms.validators import InputRequired, ValidationError

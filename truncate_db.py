@@ -24,4 +24,10 @@ if __name__ == "__main__":
     parser.add_argument("-u", "--user", type=str, required=True)
     parser.add_argument("-p", "--password", type=str, required=True)
     args = parser.parse_args()
-    truncate(database=args.database_name, user=args.user, password=args.password, host=args.host, port=args.port)
+    truncate(
+        database=args.database_name,
+        user=args.user,
+        password=args.password,
+        host=args.host,
+        port=args.port,
+    )
